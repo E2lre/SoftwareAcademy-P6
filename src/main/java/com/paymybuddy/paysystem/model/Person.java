@@ -3,10 +3,7 @@ package com.paymybuddy.paysystem.model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -17,15 +14,25 @@ public class Person {
     @Id
     @GeneratedValue
     private int id;
-    @Column(name="firstname")
+    @Column(name="firstname",length=100)
     private String firstName;
-    @Column(name="lastname")
+    @Column(name="lastname",length=100)
     private String lastName;
     private Date birthdate;
+    @Column(length=500)
     private String email;
+    @Column(length=200)
     private String password;
     private int fail;
     private int status;
+
+
+    @OneToOne
+    private Account account;
+    @ManyToOne
+    private Transaction transaction;
+    @ManyToOne
+    private BankInfo bankInfo;
 
     public Person() {
     }

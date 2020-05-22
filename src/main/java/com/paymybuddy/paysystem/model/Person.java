@@ -4,9 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name="person",uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email", name = "uniqueEmailConstraint")})
 public class Person {
 
     private static final Logger logger = LogManager.getLogger(Person.class);
@@ -19,33 +23,24 @@ public class Person {
     @Column(name="lastname",length=100)
     private String lastName;
     private Date birthdate;
-    @Column(length=500)
+    @Column(length=500,unique=true)
+    @Email   //TODO : indiquer le nom de l'index corretement
     private String email;
     @Column(length=200)
     private String password;
-    private int fail;
-    private int status;
 
 
-    @OneToOne
-    private Account account;
-    @ManyToOne
-    private Transaction transaction;
-    @ManyToOne
-    private BankInfo bankInfo;
 
     public Person() {
     }
 
-    public Person(int id, String firstName, String lastName, Date birthdate, String email,String password, int fail, int status) {
+    public Person(int id, String firstName, String lastName, Date birthdate, String email,String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthdate = birthdate;
         this.email = email;
         this.password = password;
-        this.fail = fail;
-        this.status = status;
     }
 
 
@@ -102,21 +97,7 @@ public class Person {
     public void setPassword(String password) {
         this.password = password;
     }
-    public int getFail() {
-        return fail;
-    }
 
-    public void setFail(int fail) {
-        this.fail = fail;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
 
 }

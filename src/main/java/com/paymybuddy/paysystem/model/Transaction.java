@@ -3,56 +3,74 @@ package com.paymybuddy.paysystem.model;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
 @Entity
-public class Transaction {
+@Table(name="transaction")
+public class Transaction implements Serializable {
     private static final Logger logger = LogManager.getLogger(Transaction.class);
 
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    //@Id
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "account_transaction_fk"),name = "account_person_id")
+    private Account account;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "bankinfo_transaction_fk"),name = "bankinfo_id")
+    private BankInfo bankinfo;
+    //private int accountPersonId;
+    //@Id
+    //private int bankInfoId;
     private double amount;
-    private double commission;
     private String description;
     private Date transactionDate;
-    private int userPersonId;
-    private int buddyPersonId;
 
-    @OneToMany (mappedBy = "transaction")
+/*    @OneToOne(mappedBy = "transac")
+    BuddyTransaction buddytransaction;*/
+/*    @OneToOne(mappedBy = "transac")
+    BankTransaction banktransaction;*/
+
+
+ /*   @OneToOne(fetch = FetchType.LAZY, mappedBy = "transaction")
+    private BuddyTransaction buddyTransaction;*/
+   /* @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "transactionId", referencedColumnName = "id")*/
+/*    @OneToOne(mappedBy = "transaction")
+    private BuddyTransaction buddyTransaction;*/
+
+/*    @OneToMany (mappedBy = "transaction")
     private Collection<Person> persons;
     @OneToMany (mappedBy = "transaction")
-    private Collection<Person> buddy;
+    private Collection<Person> buddy;*/
 
 
     public Transaction() {
 
     }
-    public Transaction(int id, double amount, double commission, String description, Date transactionDate, int userPersonId, int buddyPersonId) {
+    public Transaction(Long id, double amount, String description, Date transactionDate) {
         this.id = id;
         this.amount = amount;
-        this.commission = commission;
         this.description = description;
         this.transactionDate = transactionDate;
-        this.userPersonId = userPersonId;
-        this.buddyPersonId = buddyPersonId;
+        //this.accountPersonId = accountPersonId;
+        //this.bankInfoId = bankInfoId;
 
     }
 
 
-    public static Logger getLogger() {
-        return logger;
-    }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,14 +80,6 @@ public class Transaction {
 
     public void setAccount(double amount) {
         this.amount = amount;
-    }
-
-    public double getCommission() {
-        return commission;
-    }
-
-    public void setCommission(double commission) {
-        this.commission = commission;
     }
 
     public String getDescription() {
@@ -88,21 +98,21 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public int getUserPersonId() {
-        return userPersonId;
+ /*   public int getAccountPersonId() {
+        return accountPersonId;
     }
 
-    public void setUserPersonId(int userPersonId) {
-        this.userPersonId = userPersonId;
+    public void setAccountPersonId(int accountPersonId) {
+        this.accountPersonId = accountPersonId;
+    }*/
+
+    /*public int getBankInfoId() {
+        return bankInfoId;
     }
 
-    public int getBuddyPersonId() {
-        return buddyPersonId;
-    }
-
-    public void setBuddyPersonId(int buddyPersonId) {
-        this.buddyPersonId = buddyPersonId;
-    }
+    public void setBankInfoId(int bankInfoId) {
+        this.bankInfoId = bankInfoId;
+    }*/
 
 
 

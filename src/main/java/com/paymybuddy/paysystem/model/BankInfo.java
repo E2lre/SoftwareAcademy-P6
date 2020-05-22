@@ -4,10 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
-public class BankInfo {
+@Table(name="bankinfo")
+public class BankInfo implements Serializable {
     private static final Logger logger = LogManager.getLogger(BankInfo.class);
 
     @Id
@@ -16,28 +19,26 @@ public class BankInfo {
     private int type;
     private String info;
     private String description;
-    private int personId;
-
-    @OneToMany (mappedBy = "bankInfo")
-    private Collection<Person> persons;
-    @ManyToOne
-    private BankTransaction bankTransaction;
+    //private int accountPersonId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "account_bankinfo_fk"),name = "account_person_id")
+    private Account account;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bankinfo")
+    private List<Transaction> transactions;
 
     public BankInfo() {
 
     }
-    public BankInfo(int id, int type, String info, String description, int personId) {
+    public BankInfo(int id, int type, String info, String description) {
         this.id = id;
         this.type = type;
         this.info = info;
         this.description = description;
-        this.personId = personId;
+
     }
 
 
-    public static Logger getLogger() {
-        return logger;
-    }
+
 
     public int getId() {
         return id;
@@ -71,13 +72,13 @@ public class BankInfo {
         this.description = description;
     }
 
-    public int getPersonId() {
-        return personId;
+/*    public int getAccountPersonId() {
+        return accountPersonId;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
+    public void setAccountPersonId(int accountPersonId) {
+        this.accountPersonId = accountPersonId;
+    }*/
 
 
 

@@ -50,7 +50,7 @@ public class PersonControllerTest {
         String dateAsString = "25/12/2010";
         Date birthdate = sourceFormat.parse(dateAsString);
 
-        Person person = new Person(1,"james","Bond", birthdate,"james.bond@li6.com","bac",0,0);
+        Person person = new Person(1,"james","Bond", birthdate,"james.bond@li6.com","bac");
         personList.add(person);
         //GIVEN : Give an exiting Person
         Mockito.when(personDao.findAll()).thenReturn(personList);

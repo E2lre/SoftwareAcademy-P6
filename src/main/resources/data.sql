@@ -1,1 +1,5 @@
-INSERT INTO person VALUES(1,'1980-01-01','james.bond@mi6.uk',0,'James','Bond','abc',0);
+INSERT INTO person (birthdate,email,firstname,lastname,password)
+    VALUES
+    ('1953-01-01','james.bond@mi6.uk','James','Bond','abc'),
+    ('1992-07-13','vesper.lynd@casinoroyal.com','Vesper','Lynd','abc');
+

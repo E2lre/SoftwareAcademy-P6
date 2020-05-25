@@ -18,7 +18,7 @@ public class PersonController {
 
     @Autowired
     private PersonDao personDao;
-
+    /*---------------------------  Find All -----------------------------*/
     @GetMapping(value = "Persons")
     public List<Person> ListPersons() {
         return personDao.findAll();

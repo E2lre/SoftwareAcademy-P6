@@ -10,7 +10,8 @@ INSERT INTO account (person_id,balance)
 
 INSERT INTO bankinfo (description,info,type,account_person_id)
     VALUES
-    ("descriptionRIB","RIB",0,1),
-    ("descriptionIBAN","IBAN",1,2);
+    ("0123456789","RIB",0,1),
+    ("9876543210","IBAN",1,2),
+    ("123456789/2021-01-31/123","CB",3,2);
 
 

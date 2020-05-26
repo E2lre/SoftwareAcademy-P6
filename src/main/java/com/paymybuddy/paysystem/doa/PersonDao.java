@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface PersonDao extends JpaRepository <Person, Integer> {
     Person findById(int id); //TODO a voir s'il faut laisser par la suite
     Person findByLastName(String name); //TODO a voir s'il faut laisser par la suite
+    Person findByEmail(String email); //TODO commenter correctement
 }

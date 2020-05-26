@@ -5,13 +5,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="transaction")
-public class Transaction implements Serializable {
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name="transaction_type")
+public abstract class Transaction implements Serializable {
     private static final Logger logger = LogManager.getLogger(Transaction.class);
 
     @Id
@@ -20,10 +20,10 @@ public class Transaction implements Serializable {
     private Long id;
     //@Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "account_transaction_fk"),name = "account_person_id")
+    @JoinColumn(foreignKey = @ForeignKey(name = "account_transaction_fk2"),name = "account_person_id")
     private Account account;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "bankinfo_transaction_fk"),name = "bankinfo_id")
+    @JoinColumn(foreignKey = @ForeignKey(name = "bankinfo_transaction_fk2"),name = "bankinfo_id")
     private BankInfo bankinfo;
     //private int accountPersonId;
     //@Id
@@ -31,8 +31,6 @@ public class Transaction implements Serializable {
     private double amount;
     private String description;
     private Date transactionDate;
-
-
 
     public Transaction() {
 
@@ -80,23 +78,4 @@ public class Transaction implements Serializable {
     public void setTransactionDate(Date transactionDate) {
         this.transactionDate = transactionDate;
     }
-
- /*   public int getAccountPersonId() {
-        return accountPersonId;
-    }
-
-    public void setAccountPersonId(int accountPersonId) {
-        this.accountPersonId = accountPersonId;
-    }*/
-
-    /*public int getBankInfoId() {
-        return bankInfoId;
-    }
-
-    public void setBankInfoId(int bankInfoId) {
-        this.bankInfoId = bankInfoId;
-    }*/
-
-
-
 }

@@ -1,7 +1,7 @@
 package com.paymybuddy.paysystem.web.controller;
 
-import com.paymybuddy.paysystem.doa.BankTransaction2Dao;
-import com.paymybuddy.paysystem.model.BankTransaction2;
+import com.paymybuddy.paysystem.doa.BankTransfertDao;
+import com.paymybuddy.paysystem.model.BankTransfert;
 import com.paymybuddy.paysystem.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,23 +15,23 @@ import java.util.List;
 @RestController
 public class Transaction2Controller {
     @Autowired
-    private BankTransaction2Dao bankTransaction2Dao;
+    private BankTransfertDao bankTransfertDao;
     /*---------------------------  Find All -----------------------------*/
     @GetMapping(value = "Banktransactions")
-    public List<BankTransaction2> ListBankTransaction2Dao() {
-        return bankTransaction2Dao.findAll();
+    public List<BankTransfert> ListBankTransaction2Dao() {
+        return bankTransfertDao.findAll();
         //return null;
     }
     /*---------------------------  Post -----------------------------*/
     @PostMapping(value="/Banktransaction")
-    public BankTransaction2 saveBankTransaction2Dao(@RequestBody BankTransaction2 bankTransaction2) {
-        BankTransaction2 bt = new BankTransaction2();
-        bt.setFlow(0);
+    public BankTransfert saveBankTransaction2Dao(@RequestBody BankTransfert bankTransfert) {
+        BankTransfert bt = new BankTransfert(); //TODO a retirer
+        bt.setTransfertOrder(99999999);
         bt.setAccount(1);
-        bt.setDescription("toto");
+        bt.setDescription("test");
 
 
-        return bankTransaction2Dao.save(bankTransaction2);
+        return bankTransfertDao.save(bankTransfert);
         /*return bankTransaction2Dao.save(bt);*/
     }
 }

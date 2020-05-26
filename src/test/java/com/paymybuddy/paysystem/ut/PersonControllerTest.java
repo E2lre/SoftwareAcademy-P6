@@ -49,8 +49,8 @@ public class PersonControllerTest {
         DateFormat sourceFormat = new SimpleDateFormat("dd/MM/yyyy");
         String dateAsString = "25/12/2010";
         Date birthdate = sourceFormat.parse(dateAsString);
-
-        Person person = new Person(1,"james","Bond", birthdate,"james.bond@li6.com","bac");
+        Long id = Long.valueOf (1);
+        Person person = new Person(id,"james","Bond", birthdate,"james.bond@li6.com","bac");
         personList.add(person);
         //GIVEN : Give an exiting Person
         Mockito.when(personDao.findAll()).thenReturn(personList);

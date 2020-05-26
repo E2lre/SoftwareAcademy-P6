@@ -17,7 +17,7 @@ public class Person {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @Column(name="firstname",length=100)
     private String firstName;
     @Column(name="lastname",length=100)
@@ -34,7 +34,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(int id, String firstName, String lastName, Date birthdate, String email,String password) {
+    public Person(Long id, String firstName, String lastName, Date birthdate, String email,String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,11 +45,11 @@ public class Person {
 
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

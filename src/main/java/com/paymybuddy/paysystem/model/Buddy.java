@@ -27,7 +27,7 @@ public class Buddy implements Serializable {
     private Person friend;
     private Date creation;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "buddy")
-    private List<BuddyTransaction> buddyTransactions;
+    private List<Payment> payments;
 
     public Buddy() {
 

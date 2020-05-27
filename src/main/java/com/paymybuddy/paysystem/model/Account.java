@@ -26,8 +26,8 @@ public class Account implements Serializable {
     private Person person;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
-    private List<BankInfo> bankinfos;
+/*    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    private List<BankInfo> bankinfos;*/
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<Transaction> transactions;
 
@@ -49,10 +49,9 @@ public class Account implements Serializable {
         this.person = person;
         this.balance = balance;
     }
-    public Account( Person person, double balance, List<BankInfo> bankinfos,List<Transaction> transactions) {
+    public Account( Person person, double balance,List<Transaction> transactions) {
         this.person = person;
         this.balance = balance;
-        this.bankinfos = bankinfos;
         this.transactions = transactions;
     }
 
@@ -71,13 +70,7 @@ public class Account implements Serializable {
         this.balance = balance;
     }
 
-    public List<BankInfo> getBankinfos() {
-        return bankinfos;
-    }
 
-    public void setBankinfos(List<BankInfo> bankinfos) {
-        this.bankinfos = bankinfos;
-    }
 
     public List<Transaction> getTransactions() {
         return transactions;

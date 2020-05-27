@@ -22,9 +22,9 @@ public abstract class Transaction implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "account_transaction_fk2"),name = "account_person_id")
     private Account account;
-    @ManyToOne(fetch = FetchType.LAZY)
+/*    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "bankinfo_transaction_fk2"),name = "bankinfo_id")
-    private BankInfo bankinfo;
+    private BankInfo bankinfo;*/
     //private int accountPersonId;
     //@Id
     //private int bankInfoId;

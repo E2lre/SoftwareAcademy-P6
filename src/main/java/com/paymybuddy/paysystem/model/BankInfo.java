@@ -18,12 +18,15 @@ public class BankInfo implements Serializable {
     private int type;
     private String info;
     private String description;
-    //private int accountPersonId;
+
+     //private int accountPersonId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "account_bankinfo_fk"),name = "account_person_id")
-    private Account account;
+    @JoinColumn(foreignKey = @ForeignKey(name = "bankinfo_person_fk"),name = "bankinfo_person_id")
+    private Person person;
+    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "bankinfo")
+    private List<Transaction> transactions;*/
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bankinfo")
-    private List<Transaction> transactions;
+    private List<BankTransfert> bankTransferts;
 
     public BankInfo() {
 
@@ -35,8 +38,13 @@ public class BankInfo implements Serializable {
         this.description = description;
 
     }
+    public BankInfo(Person person, int type, String info, String description) {
+        this.person = person;
+        this.type = type;
+        this.info = info;
+        this.description = description;
 
-
+    }
 
 
     public int getId() {
@@ -69,6 +77,25 @@ public class BankInfo implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    @Override
+    public String toString() {
+        return "BankInfo{" +
+                "id=" + id +
+                ", type=" + type +
+                ", info='" + info + '\'' +
+                ", description='" + description + '\'' +
+                ", person=" + person +
+                '}';
     }
 
 /*    public int getAccountPersonId() {

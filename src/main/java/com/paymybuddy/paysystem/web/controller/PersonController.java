@@ -1,5 +1,7 @@
 package com.paymybuddy.paysystem.web.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.paymybuddy.paysystem.config.View;
 import com.paymybuddy.paysystem.doa.AccountDao;
 import com.paymybuddy.paysystem.doa.PersonDao;
 import com.paymybuddy.paysystem.model.Account;
@@ -33,7 +35,7 @@ public class PersonController {
     }
 
     @GetMapping(value = "Person/{id}")
-    public Person showPerson(@PathVariable int id) {
+    public Person showPerson(@PathVariable long id) {
         return personDao.findById(id);
         //return null;
     }
@@ -51,6 +53,7 @@ public class PersonController {
     }
 
     /*---------------------------  Post CRUD-----------------------------*/
+    //@JsonView(View.User.class)
     @PostMapping(value="/Person")
     public Person savePerson(@RequestBody Person person) {
         // public Person addPerson(@Valid @RequestBody Person person) {
@@ -66,6 +69,7 @@ public class PersonController {
         return personService.savePerson(person);
     }
     /*--------------------------- POST : Creation d'un user et de son compte associé----------------*/
+    //@JsonView(View.User.class)
     @PostMapping(value="/CreateLogin")
     @ResponseStatus(HttpStatus.CREATED)
     public Person createLogin(@RequestBody Person person) throws PersonCanNotbeAddedException {

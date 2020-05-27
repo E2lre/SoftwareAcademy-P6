@@ -1,5 +1,8 @@
 package com.paymybuddy.paysystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.paymybuddy.paysystem.config.View;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,24 +20,38 @@ public class Person {
 
     @Id
     @GeneratedValue
-    private Long id;
+    //@JsonView(View.User.class)
+    private long id;
+
     @Column(name="firstname",length=100)
+    //@JsonView(View.User.class)
     private String firstName;
+
     @Column(name="lastname",length=100)
+    //@JsonView(View.User.class)
     private String lastName;
+
+    //@JsonView(View.User.class)
     private Date birthdate;
+
     @Column(length=500,unique=true)
     @Email   //TODO : indiquer le nom de l'index corretement
+    //@JsonView(View.User.class)
     private String email;
+
     @Column(length=200)
+    //@JsonIgnore
+    //@JsonView(View.Admin.class)
     private String password;
 
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    //@JsonView(View.User.class)
+    private List<BankInfo> bankinfos;
 
     public Person() {
     }
 
-    public Person(Long id, String firstName, String lastName, Date birthdate, String email,String password) {
+    public Person(long id, String firstName, String lastName, Date birthdate, String email,String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,11 +62,11 @@ public class Person {
 
 
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

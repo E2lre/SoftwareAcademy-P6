@@ -33,7 +33,7 @@ public class PersonServiceImpl implements PersonService {
     public Person savePerson (Person person){
         logger.debug("savePerson start. Email : " + person.getEmail());
         Person resultPerson = null;
-
+//TODO rajouter filtre sur password en retour
         //Check if email already exist
         if (personDao.findByEmail(person.getEmail())== null) {
             //Create person
@@ -70,7 +70,7 @@ public class PersonServiceImpl implements PersonService {
             return true;
         } else
         {
-            logger.trace("pwd ko");
+            logger.info("pwd ko");
             return false;
         }
     }

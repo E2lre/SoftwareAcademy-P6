@@ -55,11 +55,11 @@ public abstract class Transaction implements Serializable {
         this.id = id;
     }
 
-    public double getAccount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAccount(double amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

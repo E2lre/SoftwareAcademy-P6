@@ -27,7 +27,7 @@ public class Transaction2Controller {
     public BankTransfert saveBankTransaction2Dao(@RequestBody BankTransfert bankTransfert) {
         BankTransfert bt = new BankTransfert(); //TODO a retirer
         bt.setTransfertOrder(99999999);
-        bt.setAccount(1);
+        bt.setAmount(1);
         bt.setDescription("test");
 
 

@@ -18,23 +18,30 @@ public class Payment extends Transaction {
     private Transaction transaction;*/
 
     private double feeAmount;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns(
-            foreignKey = @ForeignKey(name = "buddy_payment_fk2"), value =
-            {
-                    @JoinColumn( name = "buddy_person_id", referencedColumnName="person_id"),
-                    @JoinColumn( name = "buddy_friend_person_id", referencedColumnName="friend_person_id")
-            }
-    )
-    private Buddy buddy;
 
+
+
+    /*
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumns(
+                foreignKey = @ForeignKey(name = "buddy_payment_fk2"), value =
+                {
+       //                 @JoinColumn( name = "id", referencedColumnName="id"), //TODO Vérifier si necessaire
+                        @JoinColumn( name = "buddy_person_id", referencedColumnName="person_id"),
+                        @JoinColumn( name = "buddy_friend_person_id", referencedColumnName="friend_person_id")
+                }
+        )
+        private Buddy buddy;
+    */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(foreignKey = @ForeignKey(name = "payment_person_fk"),name = "payment_person_id")
+    private Person buddyPayment;
 
     public Payment() {
 
     }
     public Payment(double feeAmount) {
         this.feeAmount = feeAmount;
-
     }
 
 
@@ -46,6 +53,13 @@ public class Payment extends Transaction {
         this.feeAmount = feeAmount;
     }
 
+    public Person getBuddyPayment() {
+        return buddyPayment;
+    }
+
+    public void setBuddyPayment(Person buddyPayment) {
+        this.buddyPayment = buddyPayment;
+    }
 
 
 }

@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="person",uniqueConstraints = {
@@ -44,9 +45,31 @@ public class Person {
     //@JsonView(View.Admin.class)
     private String password;
 
+
+    @ManyToMany(fetch=FetchType.EAGER)
+    private List<Person> buddy;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     //@JsonView(View.User.class)
     private List<BankInfo> bankinfos;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    List<Role> roles;
+
+/*    @OneToMany(mappedBy = "person_id","friend_person_id")
+    private List<Buddy> buddy;*/
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "buddyCredit")
+    private List<Credit> credits;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "buddyPayment")
+    private List<Payment> payments;
+
+
+
+ /*    @OneToMany(mappedBy = "friend_person_id")
+    private List<Buddy> buddy;
+*/
 
     public Person() {
     }
@@ -115,6 +138,17 @@ public class Person {
         this.password = password;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Person> getBuddy() {
+        return buddy;
+    }
 
 
 }

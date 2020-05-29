@@ -24,12 +24,14 @@ public class BankInfoController {
     @Autowired
     private BankInfoService bankInfoService;
 
-    /*---------------------------  Find Bankinfo by person -----------------------------*/
+/*---------------------------  Find Bankinfo by person -----------------------------*/
+
     @GetMapping(value = "Bankinfo/{email}")
     public List<BankInfo> ListBankInfo(@PathVariable String email) {
         return bankInfoService.getBankInfo(email);
     }
-    /*--------------------------- POST : Creation d'un bankinfo pour un email ----------------*/
+/*--------------------------- POST : Creation d'un bankinfo pour un email ----------------*/
+
     @PostMapping(value="/Bankinfo")
     @ResponseStatus(HttpStatus.CREATED)
     public BankInfo SaveBankinfo(@RequestBody BankInfo bankInfo) throws BankInfoCanNotbeAddedException {

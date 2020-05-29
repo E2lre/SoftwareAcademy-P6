@@ -17,7 +17,7 @@ public class Account implements Serializable {
 
 
     @Id
-    private Long id;
+    private long id;
     private double balance;
 
     @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
@@ -35,12 +35,12 @@ public class Account implements Serializable {
     public Account() {
 
     }
-    public Account( Long id, double balance) {
+    public Account( long id, double balance) {
         this.id = id;
         this.balance = balance;
     }
 
-    public Account( Long id ,double balance, Person person) {
+    public Account( long id ,double balance, Person person) {
         this.id = id;
         this.balance = balance;
         this.person = person;
@@ -54,7 +54,13 @@ public class Account implements Serializable {
         this.balance = balance;
         this.transactions = transactions;
     }
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
     public Person getPerson() {
         return person;
     }

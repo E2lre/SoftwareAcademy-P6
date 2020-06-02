@@ -149,6 +149,7 @@ public class Person {
     public List<Person> getBuddy() {
         return buddy;
     }
-
-
+    public void setBuddy(List<Person> buddy) {
+        this.buddy = buddy;
+    }
 }

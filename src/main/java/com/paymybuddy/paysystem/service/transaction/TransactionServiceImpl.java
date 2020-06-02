@@ -75,7 +75,7 @@ public class TransactionServiceImpl implements TransactionService{
                     if(myAccount.getBalance()>transactionBuddy.getTransactionAmount()) {
                         //Debit my acount
 
-                        fee = transactionBuddy.getTransactionAmount() * feeTx; //TODO mettre en parametre
+                        fee = transactionBuddy.getTransactionAmount() * feeTx;
                         amount =  myAccount.getBalance() - transactionBuddy.getTransactionAmount()- fee;
                         myAccount.setBalance(amount);
                         accountDao.save(myAccount);

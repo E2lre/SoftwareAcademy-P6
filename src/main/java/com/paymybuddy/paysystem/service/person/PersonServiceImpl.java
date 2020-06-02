@@ -41,15 +41,12 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private UtilService utilService;
 
-    /**
-     * Create a new user if the mail does not exist
-     * Creation of person and account
-     * @param person to be created
-     * @return person created
-     */
-    @Override
+
+  /*  @Override
     @Transactional
+    //TODO A voir si on maintient
     //@Transactional(readOnly = true)
+    //TDODO A voir si on maintient
     public Person savePerson (Person person){
         logger.debug("savePerson start. Email : " + person.getEmail());
         Person resultPerson = null;
@@ -61,11 +58,11 @@ public class PersonServiceImpl implements PersonService {
             personToSave = person;
             personToSave.setPassword(passwordEncoder.encode(person.getPassword()));
             resultPerson = personDao.save(personToSave);
-/*             Long psnID = personToSave.getId();
+*//*             Long psnID = personToSave.getId();
 
            psnID = Long.valueOf(5);
 
-            logger.debug ("PSNID = "+ psnID.toString());*/
+            logger.debug ("PSNID = "+ psnID.toString());*//*
 
             //Account acountPerson = new Account(psnID,0);
             //Account acountPerson = new Account(psnID,0,resultPerson);
@@ -79,22 +76,8 @@ public class PersonServiceImpl implements PersonService {
         }
 
         return resultPerson;
-    }
+    }*/
 
-    //TODO a supprimer
-    @Override
-    public boolean checkPwdPerson (String pwd){
-        Person resulpDBPerson = personDao.findById(3);
-        boolean result = passwordEncoder.matches(pwd,resulpDBPerson.getPassword());
-        if (result){
-            logger.info("pwd ok");
-            return true;
-        } else
-        {
-            logger.info("pwd ko");
-            return false;
-        }
-    }
 
     public String signin(SignIn signIn) {
     //public String signin(String email, String password) {
@@ -102,7 +85,9 @@ public class PersonServiceImpl implements PersonService {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signIn.getEmail(), signIn.getPassword()));
             return jwtTokenProvider.createToken(signIn.getEmail(), personDao.findByEmail(signIn.getEmail()).getRoles());
         } catch (AuthenticationException e) {
-            throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+            // throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+            logger.error("Invalid username/password supplied for " + signIn.getEmail());
+            return "";
         }
     }
 
@@ -144,6 +129,14 @@ public class PersonServiceImpl implements PersonService {
         return myBuddyResult;
     }
 
+    /**
+     * Find all person in database to seclect buddy
+     * @return list of person
+     */
+    public List<Person> findAll (){
+        return personDao.findAll();
+
+    }
     public List<Person> findFriendByEmail(String email){
         Person myPerson = null;
         List<Person> buddys = null;

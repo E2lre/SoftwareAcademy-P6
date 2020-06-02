@@ -21,7 +21,7 @@ public class UtilServiceImpl implements UtilService {
      * @return true if they are buddy, else false
      */
     public boolean checkBuddy (String myEmail, String buddyEmail) {
-        //TODO a faire en JPA
+
         Person myPerson = null;
         Person buddyPerson = null;
         boolean result = false;

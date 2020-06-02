@@ -9,9 +9,7 @@ import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
 import com.paymybuddy.paysystem.model.questions.SignIn;
 import com.paymybuddy.paysystem.service.person.PersonService;
-import com.paymybuddy.paysystem.web.exceptions.BuddyCanNotbeAddedException;
-import com.paymybuddy.paysystem.web.exceptions.PersonCanNotbeAddedException;
-import com.paymybuddy.paysystem.web.exceptions.SinginIncorrectEmailPasswordException;
+import com.paymybuddy.paysystem.web.exceptions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,46 +35,32 @@ public class PersonController {
      * get all person in data base
      * @return list of person
      */
-    @GetMapping(value = "Persons")
+    @GetMapping(value = "persons")
     @ResponseStatus(HttpStatus.OK)
-    public List<Person> ListPersons() {
-        return personDao.findAll();
-        //TODO Gérer les erreurs
+    public List<Person> ListPersons()  throws PersonListException {
+        List<Person> personList = new ArrayList<>();
+        personList = personService.findAll();
+        if ((personList == null) || (personList.isEmpty())){
+            throw new PersonListException("Impossible to return person List ");
+        }
 
-    }
-    /*---------------------------  GET Find By Id -----------------------------*/
-    //TODO A supprimer si necessaire
-    @GetMapping(value = "Person/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Person showPerson(@PathVariable long id) {
-        return personDao.findById(id);
-        //return null;
-    }
+        return personList;
 
-    /*---------------------------  GET Find By Id -----------------------------*/
-    //TODO A supprimer si necessaire
-    @GetMapping(value = "PersonName/{name}")
-    @ResponseStatus(HttpStatus.OK)
-    public Person showPerson(@PathVariable String name) {
-        return personDao.findByLastName(name);
-        //return null;
+
     }
 
     /*---------------------------  GET Find friend By email -----------------------------*/
 
-    @GetMapping(value = "PersonBuddy/{email}")
+    @GetMapping(value = "buddy/{email}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Person> findFriendByEmail(@PathVariable String email) {
-        //TODO GERER LES CAS D ERREUR
-        return personService.findFriendByEmail(email);
-        //return null;
-    }
-//TODO A supprimer
-    @GetMapping(value = "Personpwd/{pwd}")
-    public boolean checkPwd(@PathVariable String pwd) {
-        logger.info("Personpwd");
-        return personService.checkPwdPerson(pwd);
-        //return null;
+    public List<Person> findFriendByEmail(@PathVariable String email) throws BuddyListException{
+
+        List<Person> buddyList = personService.findFriendByEmail(email);
+        if ((buddyList == null) || (buddyList.isEmpty())){
+            throw new BuddyListException("Impossible to return buddy List pour email " + email);
+        }
+        return buddyList;
+
     }
 
     /*---------------------------  Get SignIn -----------------------------*/
@@ -99,14 +84,14 @@ public class PersonController {
         //return null;
     }
     /*---------------------------  Post CRUD-----------------------------*/
-    //TODO A ssuprimer si necessaire
+/*    //TODO A ssuprimer si necessaire
     //@JsonView(View.User.class)
     @PostMapping(value="/Person")
     public Person savePerson(@RequestBody Person person) {
 
         logger.info("Person");
         return personService.savePerson(person);
-    }
+    }*/
 
     /*---------------------------  Post Signup-----------------------------*/
     //@JsonView(View.User.class)
@@ -118,22 +103,20 @@ public class PersonController {
      */
     @PostMapping(value="/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public String signup(@RequestBody Person person) {
-        // public Person addPerson(@Valid @RequestBody Person person) {
+    public String signup(@RequestBody Person person) throws SignupException {
 
-        //logger.info("POST/person=" + person);
+        logger.info("signup start : " );
+        String Result = personService.signup(person);
 
-        //Person personResult = personDao.save(person);
 
-        //logger.info("POST /person : " + personResult);
-//TODO Gestion des erreurs
-        //return personResult;
-        logger.info("signup");
-        return personService.signup(person);
+        if (Result == null) {
+            throw new SignupException(" Impossible to Signup email " + person.getEmail());
+        }
+        return Result;
     }
     /*--------------------------- POST : Creation d'un user et de son compte associé----------------*/
     //@JsonView(View.User.class)
-    //TODO a supprimer
+/*    //TODO a supprimer
     @PostMapping(value="/CreateLogin")
     @ResponseStatus(HttpStatus.CREATED)
     public Person createLogin(@RequestBody Person person) throws PersonCanNotbeAddedException {
@@ -147,7 +130,7 @@ public class PersonController {
         }
 
         return personResult;
-        }
+        }*/
 /*---------------------------  Post addBuddy -----------------------------*/
 /**
  *
@@ -155,17 +138,17 @@ public class PersonController {
  * @return
  */
 
-    @PostMapping(value="/addBuddy")
+    @PostMapping(value="/buddy")
     @ResponseStatus(HttpStatus.CREATED)
     public MyBuddy addBuddy(@RequestBody MyBuddy myBuddy) throws BuddyCanNotbeAddedException {
         logger.info("addBuddy start : " + myBuddy.getBuddyEmail());
         //TODO GERER LES CAS D ERREUR
-        logger.info("addBuddy");
+        logger.info("buddy Controler");
 
         MyBuddy buddyResult = personService.addBuddy(myBuddy);
 
         if (buddyResult == null) {
-            throw new BuddyCanNotbeAddedException(" Buddy " + buddyResult.getBuddyEmail() +" can not be create");
+            throw new BuddyCanNotbeAddedException(" Buddy " + myBuddy.getBuddyEmail() +" can not be create");
         }
         return buddyResult;
     }

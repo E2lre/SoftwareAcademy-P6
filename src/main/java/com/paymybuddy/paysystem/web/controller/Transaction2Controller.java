@@ -1,3 +1,4 @@
+/*
 package com.paymybuddy.paysystem.web.controller;
 
 import com.paymybuddy.paysystem.doa.BankTransfertDao;
@@ -14,15 +15,21 @@ import java.util.List;
 
 @RestController
 public class Transaction2Controller {
+
+    //TODO A VOIR SI ON MAINTIENT OU SI ON SUPPRIME
     @Autowired
     private BankTransfertDao bankTransfertDao;
-    /*---------------------------  Find All -----------------------------*/
+    */
+/*---------------------------  Find All -----------------------------*//*
+
     @GetMapping(value = "Banktransactions")
     public List<BankTransfert> ListBankTransaction2Dao() {
         return bankTransfertDao.findAll();
         //return null;
     }
-    /*---------------------------  Post -----------------------------*/
+    */
+/*---------------------------  Post -----------------------------*//*
+
     @PostMapping(value="/Banktransaction")
     public BankTransfert saveBankTransaction2Dao(@RequestBody BankTransfert bankTransfert) {
         BankTransfert bt = new BankTransfert(); //TODO a retirer
@@ -32,6 +39,9 @@ public class Transaction2Controller {
 
 
         return bankTransfertDao.save(bankTransfert);
-        /*return bankTransaction2Dao.save(bt);*/
+        */
+/*return bankTransaction2Dao.save(bt);*//*
+
     }
 }
+*/

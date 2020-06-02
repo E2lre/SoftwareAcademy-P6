@@ -21,7 +21,7 @@ public class TransfertController {
     private TransactionService transactionService;
     /*--------------------------- POST : Creation d'un transfert entre amis----------------*/
 
-    @PostMapping(value="/TransactionBuddy")
+    @PostMapping(value="/transaction/buddy")
     @ResponseStatus(HttpStatus.CREATED)
     public TransactionBuddy transactionBuddy(@RequestBody TransactionBuddy transactionBuddy) throws TransactionCanNotbeAddedException {
 

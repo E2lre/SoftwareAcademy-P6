@@ -38,11 +38,19 @@ public class CreditCardOperation extends Transaction {
     }
 
     public Date getExpirationDate() {
-        return expirationDate;
+
+        Date localDate = expirationDate;
+        return localDate;
+
     }
 
     public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+        if (expirationDate == null) {
+            this.expirationDate = null;
+        }
+        else {
+            this.expirationDate = new Date(expirationDate.getTime());
+        }
     }
 
     public int getCcv() {

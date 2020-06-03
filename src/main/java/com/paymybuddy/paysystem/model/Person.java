@@ -1,6 +1,7 @@
 package com.paymybuddy.paysystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.paymybuddy.paysystem.config.View;
 import org.apache.logging.log4j.LogManager;
@@ -8,14 +9,16 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
+//@JsonIgnoreProperties(value = {"password"})
 @Table(name="person",uniqueConstraints = {
         @UniqueConstraint(columnNames = "email", name = "uniqueEmailConstraint")})
-public class Person {
+public class Person implements Serializable {
 
     private static final Logger logger = LogManager.getLogger(Person.class);
 
@@ -78,9 +81,15 @@ public class Person {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = birthdate;
         this.email = email;
         this.password = password;
+        //this.birthdate = birthdate;
+        if (birthdate == null) {
+            this.birthdate = null;
+        }
+        else {
+            this.birthdate = new Date(birthdate.getTime());
+        }
     }
 
 

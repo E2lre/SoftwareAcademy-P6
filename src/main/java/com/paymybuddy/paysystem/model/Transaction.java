@@ -39,7 +39,13 @@ public abstract class Transaction implements Serializable {
         this.id = id;
         this.amount = amount;
         this.description = description;
-        this.transactionDate = transactionDate;
+        if (transactionDate == null) {
+            this.transactionDate = null;
+        }
+        else {
+            this.transactionDate = new Date(transactionDate.getTime());
+        }
+        //this.transactionDate = transactionDate;
         //this.accountPersonId = accountPersonId;
         //this.bankInfoId = bankInfoId;
 
@@ -72,10 +78,16 @@ public abstract class Transaction implements Serializable {
     }
 
     public Date getTransactionDate() {
-        return transactionDate;
+        Date localDate = transactionDate;
+        return localDate;
     }
 
     public void setTransactionDate(Date transactionDate) {
-        this.transactionDate = transactionDate;
+        if (transactionDate == null) {
+            this.transactionDate = null;
+        }
+        else {
+            this.transactionDate = new Date(transactionDate.getTime());
+        }
     }
 }

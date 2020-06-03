@@ -24,7 +24,7 @@ public class BankInfoController {
 /*---------------------------  Find Bankinfo by email -----------------------------*/
 
     @GetMapping(value = "bankinfo/{email}")
-    public List<BankInfo> ListBankInfo(@PathVariable String email) throws BankInfoCanNotBeFoundException {
+    public List<BankInfo> listBankInfo(@PathVariable String email) throws BankInfoCanNotBeFoundException {
         List<BankInfo> bankInfoListResult =null;
         bankInfoListResult = bankInfoService.getBankInfo(email);
         if (bankInfoListResult == null) {
@@ -38,7 +38,7 @@ public class BankInfoController {
 
     @PostMapping(value="/bankinfo")
     @ResponseStatus(HttpStatus.CREATED)
-    public BankInfo SaveBankinfo(@RequestBody BankInfo bankInfo) throws BankInfoCanNotbeAddedException {
+    public BankInfo saveBankinfo(@RequestBody BankInfo bankInfo) throws BankInfoCanNotbeAddedException {
 
         logger.info("SaveBankinfo start : " + bankInfo);
 

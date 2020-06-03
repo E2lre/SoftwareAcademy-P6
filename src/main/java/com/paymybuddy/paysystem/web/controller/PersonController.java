@@ -1,5 +1,6 @@
 package com.paymybuddy.paysystem.web.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
@@ -32,9 +33,9 @@ public class PersonController {
      */
     @GetMapping(value = "persons")
     @ResponseStatus(HttpStatus.OK)
-    public List<Person> ListPersons()  throws PersonListException {
-        List<Person> personList = new ArrayList<>();
-        personList = personService.findAll();
+    public List<Person> listPersons()  throws PersonListException {
+        //List<Person> personList = new ArrayList<>();
+        List<Person> personList = personService.findAll();
         if ((personList == null) || (personList.isEmpty())){
             throw new PersonListException("Impossible to return person List ");
         }

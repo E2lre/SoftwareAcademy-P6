@@ -18,6 +18,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +43,7 @@ public class JwtTokenProvider {
 
     @PostConstruct
     protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes(Charset.forName("UTF-8")));
     }
 
     //public String createToken(String username, List<Role> roles) {

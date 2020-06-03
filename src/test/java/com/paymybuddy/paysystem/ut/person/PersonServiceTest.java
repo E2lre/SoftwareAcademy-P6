@@ -1,12 +1,11 @@
-package com.paymybuddy.paysystem.ut;
+package com.paymybuddy.paysystem.ut.person;
 
 import com.paymybuddy.paysystem.config.JwtTokenProvider;
-import com.paymybuddy.paysystem.doa.PersonDao;
+import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
 import com.paymybuddy.paysystem.model.questions.SignIn;
 import com.paymybuddy.paysystem.service.person.PersonService;
-import com.paymybuddy.paysystem.service.person.PersonServiceImpl;
 import com.paymybuddy.paysystem.service.util.UtilService;
 import com.paymybuddy.paysystem.web.exceptions.CustomException;
 import org.apache.logging.log4j.LogManager;
@@ -18,16 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.paymybuddy.paysystem.config;
 
-import com.paymybuddy.paysystem.doa.PersonDao;
+import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

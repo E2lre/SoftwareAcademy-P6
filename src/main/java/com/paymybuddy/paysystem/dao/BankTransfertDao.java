@@ -1,4 +1,4 @@
-package com.paymybuddy.paysystem.doa;
+package com.paymybuddy.paysystem.dao;
 
 
 import com.paymybuddy.paysystem.model.BankTransfert;

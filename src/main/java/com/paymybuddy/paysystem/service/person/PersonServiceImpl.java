@@ -1,9 +1,8 @@
 package com.paymybuddy.paysystem.service.person;
 
 import com.paymybuddy.paysystem.config.JwtTokenProvider;
-import com.paymybuddy.paysystem.doa.AccountDao;
-import com.paymybuddy.paysystem.doa.PersonDao;
-import com.paymybuddy.paysystem.model.Account;
+import com.paymybuddy.paysystem.dao.AccountDao;
+import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.Role;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
@@ -19,7 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;

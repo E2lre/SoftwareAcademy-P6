@@ -1,9 +1,7 @@
 package com.paymybuddy.paysystem.web.controller;
 
-import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.TransactionBuddy;
 import com.paymybuddy.paysystem.service.transaction.TransactionService;
-import com.paymybuddy.paysystem.web.exceptions.PersonCanNotbeAddedException;
 import com.paymybuddy.paysystem.web.exceptions.TransactionCanNotbeAddedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +24,7 @@ public class TransfertController {
     public TransactionBuddy transactionBuddy(@RequestBody TransactionBuddy transactionBuddy) throws TransactionCanNotbeAddedException {
 
         logger.info("TransactionBuddy start : " + transactionBuddy);
-        TransactionBuddy transactionBuddyResult = transactionService.addTransaction(transactionBuddy);
+        TransactionBuddy transactionBuddyResult = transactionService.payBuddy(transactionBuddy);
 
 
         if (transactionBuddyResult == null) {

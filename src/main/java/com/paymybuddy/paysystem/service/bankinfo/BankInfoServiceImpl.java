@@ -1,10 +1,9 @@
 package com.paymybuddy.paysystem.service.bankinfo;
 
-import com.paymybuddy.paysystem.doa.BankInfoDao;
-import com.paymybuddy.paysystem.doa.PersonDao;
+import com.paymybuddy.paysystem.dao.BankInfoDao;
+import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.BankInfo;
 import com.paymybuddy.paysystem.model.Person;
-import com.paymybuddy.paysystem.service.person.PersonServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,13 @@ public class BankInfoServiceImpl implements BankInfoService {
     private PersonDao personDao;
 
     public BankInfo saveBankInfo (BankInfo bankInfo){
+        BankInfo bankinfoResult = null;
         Person personResult = personDao.findByEmail(bankInfo.getPerson().getEmail());
-        BankInfo bankinfoToSave = new BankInfo(personResult,bankInfo.getType(),bankInfo.getInfo(),bankInfo.getDescription());
-        return bankInfoDao.save(bankinfoToSave);
+        if (personResult !=null){
+            BankInfo bankinfoToSave = new BankInfo(personResult,bankInfo.getType(),bankInfo.getInfo(),bankInfo.getDescription());
+            bankinfoResult = bankInfoDao.save(bankinfoToSave);
+        }
+        return bankinfoResult;
 
     }
 

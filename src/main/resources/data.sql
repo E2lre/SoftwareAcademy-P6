@@ -12,6 +12,6 @@ VALUES
 
 INSERT INTO bankinfo(id,description,info,type,bankinfo_person_id)
 VALUES
-(1,'Description bank info 1','RIB',0,1),
-(2,'Description bank info 2','IBAN',1,2);
+(2,'Description bank info 1','RIB',0,2),
+(3,'Description bank info 2','IBAN',1,3);
 

@@ -1,10 +1,6 @@
 package com.paymybuddy.paysystem.web.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.paymybuddy.paysystem.config.View;
-import com.paymybuddy.paysystem.doa.AccountDao;
-import com.paymybuddy.paysystem.doa.PersonDao;
-import com.paymybuddy.paysystem.model.Account;
+import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
 import com.paymybuddy.paysystem.model.questions.SignIn;
@@ -16,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.paymybuddy.paysystem.service.util;
 
-import com.paymybuddy.paysystem.doa.PersonDao;
+import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.service.person.PersonServiceImpl;
 import org.apache.logging.log4j.LogManager;

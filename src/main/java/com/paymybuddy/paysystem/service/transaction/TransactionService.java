@@ -4,5 +4,5 @@ import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.TransactionBuddy;
 
 public interface TransactionService {
-    public TransactionBuddy addTransaction (TransactionBuddy transactionBuddy);
+    public TransactionBuddy payBuddy(TransactionBuddy transactionBuddy);
 }

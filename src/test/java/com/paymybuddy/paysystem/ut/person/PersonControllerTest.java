@@ -1,4 +1,4 @@
-package com.paymybuddy.paysystem.ut;
+package com.paymybuddy.paysystem.ut.person;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paymybuddy.paysystem.model.Person;
@@ -20,13 +20,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -50,7 +50,7 @@ public class MyBuddy {
         this.buddyLastname = buddyLastname;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "MyBuddy{" +
                 "myEmail='" + myEmail + '\'' +
@@ -58,6 +58,6 @@ public class MyBuddy {
                 ", buddyFirstname='" + buddyFirstname + '\'' +
                 ", buddyLastname='" + buddyLastname + '\'' +
                 '}';
-    }
+    }*/
 
 }

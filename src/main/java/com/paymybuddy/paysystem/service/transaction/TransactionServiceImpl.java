@@ -1,9 +1,9 @@
 package com.paymybuddy.paysystem.service.transaction;
 
-import com.paymybuddy.paysystem.doa.AccountDao;
-import com.paymybuddy.paysystem.doa.CreditDao;
-import com.paymybuddy.paysystem.doa.PaymentDao;
-import com.paymybuddy.paysystem.doa.PersonDao;
+import com.paymybuddy.paysystem.dao.AccountDao;
+import com.paymybuddy.paysystem.dao.CreditDao;
+import com.paymybuddy.paysystem.dao.PaymentDao;
+import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.*;
 import com.paymybuddy.paysystem.model.questions.TransactionBuddy;
 import com.paymybuddy.paysystem.service.person.PersonServiceImpl;
@@ -11,13 +11,10 @@ import com.paymybuddy.paysystem.service.util.UtilService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 @Service
@@ -36,7 +33,7 @@ public class TransactionServiceImpl implements TransactionService{
     private UtilService utilService;
 
     @Transactional
-    public TransactionBuddy addTransaction (TransactionBuddy transactionBuddy){
+    public TransactionBuddy payBuddy(TransactionBuddy transactionBuddy){
         TransactionBuddy transactionBuddyResult = null;
         Person myPerson = null;
         Person buddyPerson = null;
@@ -60,13 +57,7 @@ public class TransactionServiceImpl implements TransactionService{
             buddyPerson =  personDao.findByEmail(transactionBuddy.getBuddyEmail());
             if (buddyPerson != null) {
                 //Are they friend
- //TODO THEY ARE FREIND Faire en jointure
-/*                int index;
-                for(index=0;index<myPerson.getBuddy().size();index++){
-                    if (myPerson.getBuddy().get(index).getId() == buddyPerson.getId()) {
-                        theyAreBuddy = true;
-                    }
-                }*/
+
                 theyAreBuddy = utilService.checkBuddy(transactionBuddy.getMyEmail(),transactionBuddy.getBuddyEmail());
                //TODO  theyAreBuddy = personDao.existsByEmailAndBuddy(myPerson.getEmail(),buddyPerson);
                 if (theyAreBuddy) {

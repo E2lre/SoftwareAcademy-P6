@@ -1,13 +1,10 @@
 package com.paymybuddy.paysystem.web.controller;
 
 
-import com.paymybuddy.paysystem.doa.PersonDao;
 import com.paymybuddy.paysystem.model.BankInfo;
-import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.service.bankinfo.BankInfoService;
-import com.paymybuddy.paysystem.service.person.PersonService;
+import com.paymybuddy.paysystem.web.exceptions.BankInfoCanNotBeFoundException;
 import com.paymybuddy.paysystem.web.exceptions.BankInfoCanNotbeAddedException;
-import com.paymybuddy.paysystem.web.exceptions.PersonCanNotbeAddedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +21,22 @@ public class BankInfoController {
     @Autowired
     private BankInfoService bankInfoService;
 
-/*---------------------------  Find Bankinfo by person -----------------------------*/
+/*---------------------------  Find Bankinfo by email -----------------------------*/
 
-    @GetMapping(value = "Bankinfo/{email}")
-    public List<BankInfo> ListBankInfo(@PathVariable String email) {
-        return bankInfoService.getBankInfo(email);
+    @GetMapping(value = "bankinfo/{email}")
+    public List<BankInfo> ListBankInfo(@PathVariable String email) throws BankInfoCanNotBeFoundException {
+        List<BankInfo> bankInfoListResult =null;
+        bankInfoListResult = bankInfoService.getBankInfo(email);
+        if (bankInfoListResult == null) {
+            throw new BankInfoCanNotBeFoundException(" BankInfo can not be found for email "+ email);
+        }
+
+        return bankInfoListResult;
     }
+
 /*--------------------------- POST : Creation d'un bankinfo pour un email ----------------*/
 
-    @PostMapping(value="/Bankinfo")
+    @PostMapping(value="/bankinfo")
     @ResponseStatus(HttpStatus.CREATED)
     public BankInfo SaveBankinfo(@RequestBody BankInfo bankInfo) throws BankInfoCanNotbeAddedException {
 

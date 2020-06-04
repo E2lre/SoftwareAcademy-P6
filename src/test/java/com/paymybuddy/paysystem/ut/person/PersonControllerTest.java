@@ -3,7 +3,7 @@ package com.paymybuddy.paysystem.ut.person;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
-import com.paymybuddy.paysystem.model.questions.SignIn;
+//import com.paymybuddy.paysystem.model.questions.SignIn;
 import com.paymybuddy.paysystem.service.person.PersonService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -155,11 +155,13 @@ public class PersonControllerTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void Signin_giveEmailandCorrectPassword_connectionIsAgree() throws Exception {
         String token = "abcdef99";
-
-        Mockito.when(personService.signin(any(SignIn.class))).thenReturn(token);
+        Person signin = new Person();
+        signin.setEmail(existEmail);
+        signin.setPassword(existPasswordConst);
+        Mockito.when(personService.signin(any(Person.class))).thenReturn(token);
         //WHEN //THEN return token
          mockMvc.perform(get("/signin")
-                .content(asJsonString(new SignIn(existEmail,existPasswordConst)))
+                .content(asJsonString(signin))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -172,11 +174,14 @@ public class PersonControllerTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void Signin_giveEmailandIncorrectPassword_connectionIsRefused() throws Exception {
         String token = "abcdef99";
+        Person signin = new Person();
+        signin.setEmail(existEmail);
+        signin.setPassword(existPasswordConst);
 
-        Mockito.when(personService.signin(any(SignIn.class))).thenReturn(null);
+        Mockito.when(personService.signin(any(Person.class))).thenReturn(null);
         //WHEN //THEN return token
         mockMvc.perform(get("/signin")
-                .content(asJsonString(new SignIn(existEmail,existIncorrectPasswordConst)))
+                .content(asJsonString(signin))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())

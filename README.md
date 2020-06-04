@@ -14,3 +14,12 @@ What things you need to install the software and how to install them
 - Java 1.8
 - Maven 3.6.2
 - Spring Boot 2.2.6
+- My SQL
+
+# Installation
+Execute drop.sql and create.sql
+
+#Class Diagram
+![ScreenShot](D-Class.jpg)
+#MPD
+![ScreenShot](MPD.jpg)

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,7 +16,9 @@ public class BankInfo implements Serializable {
     @Id
     @GeneratedValue
     private int id;
+    @NotNull
     private int type;
+    @NotNull
     private String info;
     private String description;
 

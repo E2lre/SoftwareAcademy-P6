@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,8 +29,10 @@ public abstract class Transaction implements Serializable {
     //private int accountPersonId;
     //@Id
     //private int bankInfoId;
+    @NotNull
     private double amount;
     private String description;
+    @NotNull
     private Date transactionDate;
 
     public Transaction() {

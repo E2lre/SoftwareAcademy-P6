@@ -3,10 +3,11 @@ package com.paymybuddy.paysystem.service.person;
 import com.paymybuddy.paysystem.config.JwtTokenProvider;
 import com.paymybuddy.paysystem.dao.AccountDao;
 import com.paymybuddy.paysystem.dao.PersonDao;
+import com.paymybuddy.paysystem.model.Account;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.Role;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
-import com.paymybuddy.paysystem.model.questions.SignIn;
+//import com.paymybuddy.paysystem.model.questions.SignIn;
 import com.paymybuddy.paysystem.service.util.UtilService;
 import com.paymybuddy.paysystem.web.exceptions.CustomException;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,7 +79,7 @@ public class PersonServiceImpl implements PersonService {
     }*/
 
 
-    public String signin(SignIn signIn) {
+    /*public String signinOLD(SignIn signIn) {
     //public String signin(String email, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signIn.getEmail(), signIn.getPassword()));
@@ -87,13 +89,36 @@ public class PersonServiceImpl implements PersonService {
             logger.error("Invalid username/password supplied for " + signIn.getEmail());
             return "";
         }
+    }*/
+    public String signin(Person person) {
+        //public String signin(String email, String password) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(person.getEmail(), person.getPassword()));
+            return jwtTokenProvider.createToken(person.getEmail(), personDao.findByEmail(person.getEmail()).getRoles());
+        } catch (AuthenticationException e) {
+            // throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+            logger.error("Invalid username/password supplied for " + person.getEmail());
+            return "";
+        }
     }
-
+    @Transactional
     public String signup(Person person) {
+        boolean result = false;
         if (!personDao.existsByEmail(person.getEmail())) {
             person.setPassword(passwordEncoder.encode(person.getPassword()));
             person.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT))); //TODO ICICICICICICICICICICICIU
-            personDao.save(person);
+            Person resultPerson = personDao.save(person);
+            if (resultPerson != null) {
+                Account acountPerson = new Account(person, 0);
+
+                Account accountResult = accountDao.save(acountPerson);
+                if (accountResult != null) {
+                    result = true;
+
+                }
+            }
+        }
+        if (result) {
             return jwtTokenProvider.createToken(person.getEmail(), person.getRoles());
         } else {
             throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY); //TODO CUSOMISER L'ERREUR

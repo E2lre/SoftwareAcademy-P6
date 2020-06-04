@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -14,10 +15,13 @@ import java.util.Date;
 public class CreditCardOperation extends Transaction {
     private static final Logger logger = LogManager.getLogger(CreditCardOperation.class);
 
-
+    @NotNull
     private int creditCardNumber;
+    @NotNull
     private Date expirationDate;
+    @NotNull
     private int ccv;
+    @NotNull
     private int creditCardOrder;
 
     public CreditCardOperation() {

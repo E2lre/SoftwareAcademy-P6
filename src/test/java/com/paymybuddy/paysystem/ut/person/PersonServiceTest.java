@@ -4,7 +4,7 @@ import com.paymybuddy.paysystem.config.JwtTokenProvider;
 import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
-import com.paymybuddy.paysystem.model.questions.SignIn;
+//import com.paymybuddy.paysystem.model.questions.SignIn;
 import com.paymybuddy.paysystem.service.person.PersonService;
 import com.paymybuddy.paysystem.service.util.UtilService;
 import com.paymybuddy.paysystem.web.exceptions.CustomException;
@@ -130,54 +130,6 @@ public class PersonServiceTest {
         //THEN
         assertThrows(CustomException.class, () -> personService.signup(personMock));
     }
-        /*------------------------ SignIN ---------------------------------*/
-        /**
-         * PersonService
-         * Test : Check user
-         */
-        //TODO TEst SignIN
-     //   @Test
-        public void signin_anExistingUserTryToConnect_theJWTTokenIsReturn(){
-            //GIVEN
-  /*          Authentication authentication = mock(Authentication.class);
-            Mockito.when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
-  */          //Mockito.when(personDao.existsByEmail(anyString())).thenReturn(false);
-            SignIn signin = new SignIn(emailConst,passwordConst);
-  //          Mockito.when(jwtTokenProvider.createToken(anyString(),any(List.class))).thenReturn(jwtTockenConst);
-            //WHEN
-            String result = personService.signin(signin);
-            //THEN
-            assertThat(result).isNotEmpty();
-            assertThat(result).isEqualTo(jwtTockenConst);
-            verify(passwordEncoder, Mockito.times(1)).encode(anyString());
-
- /*       assertThat(personServiceTest.getLastName()).isEqualTo(lastNameConst);
-        assertThat(personServiceTest.getAddress()).isEqualTo(addressConst);
-        assertThat(personServiceTest.getCity()).isEqualTo(cityConst);
-        assertThat(personServiceTest.getZip()).isEqualTo(zipConst);
-        assertThat(personServiceTest.getPhone()).isEqualTo(phoneConst);
-        assertThat(personServiceTest.getEmail()).isEqualTo(emailConst);*/
-
-
-        }
-
-        /**
-         * PersonService
-         * Test : Check User
-         */
-        //TODO TEst SignIN
-       // @Test
-        public void signin_anIncorrectUserTryToConnect_errorIsReturn(){
-            //GIVEN
-            SignIn signin = new SignIn(emailConst,incorrectpasswordConst);
-            Mockito.when(jwtTokenProvider.createToken(anyString(),any(List.class))).thenReturn(jwtTockenConst);
-            //WHEN
-            //THEN
-            assertThrows(CustomException.class, () -> personService.signin(signin));
-
-
-
-        }
 
     /*------------------------ addBuddy ---------------------------------*/
     /**

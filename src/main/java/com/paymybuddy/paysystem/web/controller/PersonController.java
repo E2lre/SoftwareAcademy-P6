@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
-import com.paymybuddy.paysystem.model.questions.SignIn;
+// com.paymybuddy.paysystem.model.questions.SignIn;
+import com.paymybuddy.paysystem.model.questions.PersonDTO;
 import com.paymybuddy.paysystem.service.person.PersonService;
 import com.paymybuddy.paysystem.web.exceptions.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +33,7 @@ public class PersonController {
      * get all person in data base
      * @return list of person
      */
-    @GetMapping(value = "persons")
+ /*   @GetMapping(value = "personsOLD")
     @ResponseStatus(HttpStatus.OK)
     public List<Person> listPersons()  throws PersonListException {
         //List<Person> personList = new ArrayList<>();
@@ -43,8 +45,27 @@ public class PersonController {
         return personList;
 
 
-    }
+    }*/
+    @GetMapping(value = "persons")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PersonDTO> listPersons2()  throws PersonListException {
 
+        List<Person> personList = personService.findAll();
+        if ((personList == null) || (personList.isEmpty())) {
+            throw new PersonListException("Impossible to return person List ");
+        }
+
+        //Return correct format
+        ModelMapper modelMapper = new ModelMapper();
+        List<PersonDTO> personDTOList = new ArrayList<>();
+        for (Person ePerson : personList) {
+            PersonDTO personDTO = modelMapper.map(ePerson, PersonDTO.class);
+            personDTOList.add(personDTO);
+        }
+        return personDTOList;
+
+
+    }
     /*---------------------------  GET Find friend By email -----------------------------*/
 
     @GetMapping(value = "buddy/{email}")
@@ -67,17 +88,29 @@ public class PersonController {
      * @return JWT tocken if ok
      * @throws SinginIncorrectEmailPasswordException exception if error
      */
-    @GetMapping(value = "/signin")
+  /*  @GetMapping(value = "/signinOLD")
     @ResponseStatus(HttpStatus.OK)
-    public String checkPwd(@RequestBody SignIn signIn) throws SinginIncorrectEmailPasswordException {
+    public String checkPwdOLD(@RequestBody SignIn signIn) throws SinginIncorrectEmailPasswordException {
         logger.info("Signin");
-        String result = personService.signin(signIn);
+        String result = personService.signinOLD(signIn);
         if ((result == null) || (result.isEmpty())){
             throw new SinginIncorrectEmailPasswordException(" Incorrect Email/Password for email " + signIn.getEmail());
         }
 
         return result;
-        //return null;
+
+    }*/
+    @GetMapping(value = "/signin")
+    @ResponseStatus(HttpStatus.OK)
+    public String checkPwd(@RequestBody Person person) throws SinginIncorrectEmailPasswordException {
+        logger.info("Signin");
+        String result = personService.signin(person);
+        if ((result == null) || (result.isEmpty())){
+            throw new SinginIncorrectEmailPasswordException(" Incorrect Email/Password for email " + person.getEmail());
+        }
+
+        return result;
+
     }
     /*---------------------------  Post CRUD-----------------------------*/
 /*    //TODO A ssuprimer si necessaire
@@ -138,7 +171,7 @@ public class PersonController {
     @ResponseStatus(HttpStatus.CREATED)
     public MyBuddy addBuddy(@RequestBody MyBuddy myBuddy) throws BuddyCanNotbeAddedException {
         logger.info("addBuddy start : " + myBuddy.getBuddyEmail());
-        //TODO GERER LES CAS D ERREUR
+
         logger.info("buddy Controler");
 
         MyBuddy buddyResult = personService.addBuddy(myBuddy);

@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points with no authentification
         http.authorizeRequests()//
-                .antMatchers("/signin").permitAll()//
+                .antMatchers("/signin*").permitAll()//
                 .antMatchers("/signup").permitAll()//
                 .antMatchers("/Persons").permitAll()// //TODO a retirer
                 .antMatchers("/addBuddy").permitAll()// //TODO a retirer

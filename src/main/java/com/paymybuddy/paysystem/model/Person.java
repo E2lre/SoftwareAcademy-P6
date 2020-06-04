@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -28,10 +29,12 @@ public class Person implements Serializable {
     private long id;
 
     @Column(name="firstname",length=100)
+    @NotNull
     //@JsonView(View.User.class)
     private String firstName;
 
     @Column(name="lastname",length=100)
+    @NotNull
     //@JsonView(View.User.class)
     private String lastName;
 
@@ -40,12 +43,12 @@ public class Person implements Serializable {
 
     @Column(length=500,unique=true)
     @Email   //TODO : indiquer le nom de l'index corretement
+    @NotNull
     //@JsonView(View.User.class)
     private String email;
 
     @Column(length=200)
-    //@JsonIgnore
-    //@JsonView(View.Admin.class)
+    @NotNull
     private String password;
 
 

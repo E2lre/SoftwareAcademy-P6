@@ -1,8 +1,11 @@
+/*
 package com.paymybuddy.paysystem.model.questions;
 
+*/
 /**
  * Cette classe permet de gérer les informations de la page SignIn
- */
+ *//*
+
 public class SignIn {
 
     private String email;
@@ -34,3 +37,4 @@ public class SignIn {
 
 
 }
+*/

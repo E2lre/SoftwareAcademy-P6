@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="payment")
@@ -16,7 +17,7 @@ public class Payment extends Transaction {
     @OneToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="transaction_id",foreignKey = @ForeignKey(name = "transaction_buddytransaction_fk"))
     private Transaction transaction;*/
-
+    @NotNull
     private double feeAmount;
 
 

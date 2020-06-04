@@ -1,7 +1,8 @@
 package com.paymybuddy.paysystem.it;
 
 
-import com.paymybuddy.paysystem.model.questions.SignIn;
+import com.paymybuddy.paysystem.model.Person;
+//import com.paymybuddy.paysystem.model.questions.SignIn;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,12 +80,14 @@ public class PersonControllerIT {
     @WithMockUser(roles="USER")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void Signin_giveEmailandCorrectPassword_connectionIsAgree() throws Exception {
-        String token = "abcdef99";
-
-
+        //Given
+        Person signin = new Person();
+        signin.setEmail(existEmail);
+        signin.setPassword(existPasswordConst);
         //WHEN //THEN return token
         mockMvc.perform(get("/signin")
-                .content(asJsonString(new SignIn(existEmail,existPasswordConst)))
+                .content(asJsonString(signin))
+                //.content(asJsonString(new Person("",existEmail,existPasswordConst)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -94,11 +97,14 @@ public class PersonControllerIT {
     @WithMockUser(roles="USER")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void Signin_giveEmailandIncorrectPassword_connectionIsRefused() throws Exception {
-        String token = "abcdef99";
-
+        //Given
+        Person signin = new Person();
+        signin.setEmail(existEmail);
+        signin.setPassword(existIncorrectPasswordConst);
         //WHEN //THEN return token
         mockMvc.perform(get("/signin")
-                .content(asJsonString(new SignIn(existEmail,existIncorrectPasswordConst)))
+                .content(asJsonString(signin))
+                //.content(asJsonString(new SignIn(existEmail,existIncorrectPasswordConst)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())

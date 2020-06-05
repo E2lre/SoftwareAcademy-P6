@@ -2,12 +2,15 @@ package com.paymybuddy.paysystem.it;
 
 
 import com.paymybuddy.paysystem.dao.AccountDao;
+import com.paymybuddy.paysystem.dao.BankInfoDao;
 import com.paymybuddy.paysystem.dao.PersonDao;
-import com.paymybuddy.paysystem.model.Account;
-import com.paymybuddy.paysystem.model.Person;
+import com.paymybuddy.paysystem.model.*;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
 import com.paymybuddy.paysystem.model.questions.TransactionBuddy;
 import com.paymybuddy.paysystem.service.person.PersonService;
+import com.paymybuddy.paysystem.ut.transaction.TransactionServiceTest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import static com.paymybuddy.paysystem.ut.person.PersonControllerTest.asJsonString;
@@ -35,13 +41,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@EnableAutoConfiguration(exclude = {SecurityFilterAutoConfiguration.class, SecurityAutoConfiguration.class})
 @AutoConfigureTestDatabase
 public class TransactionControllerIT {
-
+    private static final Logger logger = LogManager.getLogger(TransactionControllerIT.class);
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private PersonDao personDao;
     @Autowired
     private AccountDao accountDao;
+    @Autowired
+    private BankInfoDao bankInfoDao;
     @Autowired
     private PersonService personService;
 
@@ -50,6 +58,7 @@ public class TransactionControllerIT {
     String firstNameConst = "Tatiana";
     String lastNameConst = "Romanova";
     String emailConst = "james.bond@mi6.uk";
+    String incorrectEmailConst = "hubert.bonisseurdelabath@oss117.fr";
     String birthdateConst = "01/13/1693";
     String passwordConst = "SPECTRE";
     String encryptPasswordConst = "$2a$12$scj6PvgZYRLahntmwOmm/.PnXJjHYK2SpsgsWb6fFbZBr5nWpbmJ6";
@@ -95,7 +104,7 @@ public class TransactionControllerIT {
     @Test
     @WithMockUser(roles = "USER")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-    public void payBuddy_existingPersonPayASomeOneNotBuddy_transfertIsDone() throws Exception {
+    public void payBuddy_existingPersonPayASomeOneNotBuddy_errorIsReturn() throws Exception {
         //Given
         double transactionAmout = 10;
         double feeAmount=0;
@@ -120,4 +129,157 @@ public class TransactionControllerIT {
 
 
     }
+
+    /*---------------------------------------- transactionCreditCard-------------------------------*/
+
+    @Test
+    @WithMockUser(roles = "USER")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    public void transactionCreditCard_correctInformationCB_transfertIsDone() throws Exception {
+        //Given
+        CreditCardOperation creditCardOperation= new CreditCardOperation();
+        creditCardOperation.setCreditCardNumber(1234567890);
+        creditCardOperation.setCcv(123);
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date expirationDate;
+            expirationDate = simpleDateFormat.parse("01/01/2030");
+            creditCardOperation.setExpirationDate(expirationDate);
+        } catch (ParseException e){
+            logger.error(e.getMessage());
+        }
+        creditCardOperation.setAmount(10);
+        creditCardOperation.setDescription("Description CB Test");
+        Person myPerson = personDao.findByEmail(emailConst);
+        Account myAccount = accountDao.findByPerson(myPerson);
+        double startBalance = myAccount.getBalance();
+
+        //WHEN THEN
+        mockMvc.perform(post("/transaction/creditcard/"+emailConst)
+                .content(asJsonString(creditCardOperation))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
+
+        myAccount = accountDao.findByPerson(myPerson);
+        assertThat(myAccount.getBalance()).isEqualTo(startBalance+10);
+
+
+
+//TODO Ajouter des controles
+
+
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    public void transactionCreditCard_incorrectInformationCB_errorIsReturn() throws Exception {
+        //Given
+        CreditCardOperation creditCardOperation= new CreditCardOperation();
+        creditCardOperation.setCreditCardNumber(1234567890);
+        creditCardOperation.setCcv(123);
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date expirationDate;
+            expirationDate = simpleDateFormat.parse("01/01/2030");
+            creditCardOperation.setExpirationDate(expirationDate);
+        } catch (ParseException e){
+            logger.error(e.getMessage());
+        }
+        creditCardOperation.setAmount(10);
+        creditCardOperation.setDescription("Description CB Test");
+
+        //WHEN THEN
+        mockMvc.perform(post("/transaction/creditcard/"+incorrectEmailConst)
+                .content(asJsonString(creditCardOperation))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotAcceptable());
+
+//TODO Ajouter des controles
+
+
+    }
+    /*---------------------------------------- bank transfert Operation-------------------------------*/
+
+    @Test
+    @WithMockUser(roles = "USER")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    public void bankTransaction_correctInformation_transfertIsDone() throws Exception {
+        //Given
+        BankTransfert bankTransfert= new BankTransfert();
+        bankTransfert.setAmount(10);
+        bankTransfert.setTransfertOrder(123465789);
+        bankTransfert.setDescription("Virement bancaire");
+        BankInfo bankInfo = new BankInfo();
+        bankInfo.setId(2);
+        bankTransfert.setBankinfo(bankInfo);
+
+
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date expirationDate;
+            expirationDate = simpleDateFormat.parse("01/01/2030");
+            bankTransfert.setTransactionDate(expirationDate);
+        } catch (ParseException e){
+            logger.error(e.getMessage());
+        }
+        Person myPerson = personDao.findByEmail(emailConst);
+        Account myAccount = accountDao.findByPerson(myPerson);
+        double startBalance = myAccount.getBalance();
+
+
+        //WHEN THEN
+        mockMvc.perform(post("/transaction/bank/"+emailConst)
+                .content(asJsonString(bankTransfert))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
+
+        myAccount = accountDao.findByPerson(myPerson);
+        assertThat(myAccount.getBalance()).isEqualTo(startBalance-10);
+
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    public void bankTransaction_incorrectInformation_errorIsReturn() throws Exception {
+        //Given
+        BankTransfert bankTransfert= new BankTransfert();
+        bankTransfert.setAmount(10);
+        bankTransfert.setTransfertOrder(123465789);
+        bankTransfert.setDescription("Virement bancaire");
+        //Person myPerson = personDao.findByEmail(emailConst);
+        BankInfo bankInfo = new BankInfo();
+        bankInfo.setId(2);
+        bankTransfert.setBankinfo(bankInfo);
+
+
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date expirationDate;
+            expirationDate = simpleDateFormat.parse("01/01/2030");
+            bankTransfert.setTransactionDate(expirationDate);
+        } catch (ParseException e){
+            logger.error(e.getMessage());
+        }
+
+
+        //WHEN THEN
+        mockMvc.perform(post("/transaction/bank/"+incorrectEmailConst)
+                .content(asJsonString(bankTransfert))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotAcceptable());
+
+
+    }
+
+
 }

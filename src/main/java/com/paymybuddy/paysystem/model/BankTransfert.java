@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 
 @Entity
@@ -16,17 +17,29 @@ public class BankTransfert extends Transaction {
 
     @NotNull
     private int transfertOrder;
+
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "banktransfert_bankinfo_fk"),name = "bankinfo_id")
-    @MapsId
+    //@MapsId
     private BankInfo bankinfo;
 
     public BankTransfert() {
 
     }
-    public BankTransfert( int transfertOrder) {
+    public BankTransfert(Long id, double amount, String description, Date transactionDate) {
+        super(id, amount, description, transactionDate);
+    }
+
+/*    public BankTransfert( int transfertOrder) {
         this.transfertOrder = transfertOrder;
     }
+
+    public BankTransfert( int transfertOrder, BankInfo bankInfo) {
+        this.transfertOrder = transfertOrder;
+        this.bankinfo = bankInfo;
+    }*/
 
     public int getTransfertOrder() {
         return transfertOrder;
@@ -34,6 +47,14 @@ public class BankTransfert extends Transaction {
 
     public void setTransfertOrder(int transfertOrder) {
         this.transfertOrder = transfertOrder;
+    }
+
+    public BankInfo getBankinfo() {
+        return bankinfo;
+    }
+
+    public void setBankinfo(BankInfo bankinfo) {
+        this.bankinfo = bankinfo;
     }
 
 }

@@ -10,13 +10,13 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name="creditcartoperation")
-@DiscriminatorValue("CreditCartOperation")
+@Table(name="creditcardoperation")
+@DiscriminatorValue("CreditCardOperation")
 public class CreditCardOperation extends Transaction {
     private static final Logger logger = LogManager.getLogger(CreditCardOperation.class);
 
     @NotNull
-    private int creditCardNumber;
+    private double creditCardNumber;
     @NotNull
     private Date expirationDate;
     @NotNull
@@ -33,11 +33,11 @@ public class CreditCardOperation extends Transaction {
 
 
 
-    public int getCreditCardNumber() {
+    public double getCreditCardNumber() {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(int creditCardNumber) {
+    public void setCreditCardNumber(double creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
 

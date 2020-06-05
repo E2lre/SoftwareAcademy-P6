@@ -1,9 +1,6 @@
 package com.paymybuddy.paysystem.service.transaction;
 
-import com.paymybuddy.paysystem.dao.AccountDao;
-import com.paymybuddy.paysystem.dao.CreditDao;
-import com.paymybuddy.paysystem.dao.PaymentDao;
-import com.paymybuddy.paysystem.dao.PersonDao;
+import com.paymybuddy.paysystem.dao.*;
 import com.paymybuddy.paysystem.model.*;
 import com.paymybuddy.paysystem.model.questions.TransactionBuddy;
 import com.paymybuddy.paysystem.service.person.PersonServiceImpl;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Service
@@ -29,6 +27,12 @@ public class TransactionServiceImpl implements TransactionService{
     private PaymentDao paymentDao;
     @Autowired
     private CreditDao creditDao;
+    @Autowired
+    private CreditCardOperationDao creditCardOperationDao;
+    @Autowired
+    private BankTransfertDao bankTransfertDao;
+    @Autowired
+    private BankInfoDao bankInfoDao;
     @Autowired
     private UtilService utilService;
 
@@ -95,9 +99,8 @@ public class TransactionServiceImpl implements TransactionService{
                         credit.setTransactionDate(now);
                         credit.setAmount(transactionBuddy.getTransactionAmount());
                         creditDao.save(credit);
-                        //TODO aliment le compte des fee
 
-                        //Credit application account
+                        //Credit application account for fee
                         Account systemeAccount = accountDao.findById(systemeAccountId);
                         amount =  systemeAccount.getBalance() + fee;
                         systemeAccount.setBalance(amount);
@@ -109,8 +112,121 @@ public class TransactionServiceImpl implements TransactionService{
                 }
             }
         }
-
+        logger.debug("addTransaction finish. info : " + transactionBuddyResult);
+        //TODO ajouter les erreurs dans les else
     return transactionBuddyResult;
     }
 
+    /**
+     *
+     * @param transactionBuddy
+     * @return amount of account
+     */
+    @Transactional
+    public double creditCardTransaction(String email, CreditCardOperation creditCardOperation){
+        logger.debug("start creditCardTransaction with email "+email);
+        boolean isOk = false;
+        double amount = 0;
+        Person myPerson = null;
+        myPerson =  personDao.findByEmail(email);
+
+        //Check if person exist
+        if (myPerson != null) {
+            //Valid authorisation  with the bank ==> Imagine, you are connected to the bank to get Authorisation
+            //Check fields are not empty
+            Date now = new Date();
+            if ((creditCardOperation.getCreditCardNumber() !=0) &&
+                    (creditCardOperation.getCcv() !=0) &&
+                    (creditCardOperation.getExpirationDate().after(now)) &&
+                    (creditCardOperation.getAmount() != 0)) {
+                    //Credit amount of the person
+                    Account myAccount = accountDao.findByPerson(myPerson);
+                    amount = myAccount.getBalance() + creditCardOperation.getAmount();
+                    myAccount.setBalance(amount);
+                    accountDao.save(myAccount);
+
+                    //credit card opération on transaction table.
+               // creditCardOperation.setExpirationDate();
+                //creditCardOperation.setCreditCardNumber();
+                //creditCardOperation.setDescription();
+                //creditCardOperation.setAmount();
+                //creditCardOperation.setCcv();
+                //creditCardOperation.setId();
+                //creditCardOperation.setCreditCardOrder();
+                creditCardOperation.setTransactionDate(now);
+                creditCardOperationDao.save(creditCardOperation);
+
+/*                     CreditCardOperation credit = new Credit();
+                    credit.setCcv();
+                    credit.setExpirationDate(
+                    );setBuddyCredit(myPerson);
+                    credit.setDescription(creditCardOperation.getDescription());
+                    credit.setTransactionDate(now);
+                    credit.setAmount(creditCardOperation.getAmount());
+                    creditDao.save(credit);*/
+           } else {
+                amount = -1;
+                logger.error("incorrect credit card inf" + creditCardOperation.getCreditCardNumber() + "/"+creditCardOperation.getCcv()+"/"+creditCardOperation.getExpirationDate() );
+            }
+
+        } else {
+            amount = -1;
+            logger.error("nobody for this email " + email);
+        }
+        logger.debug("creditCardTransaction finish correctly with email "+email);
+
+        return amount;
+    }
+
+    @Transactional
+    public double bankTransaction(String email, BankTransfert bankTransfert){
+        logger.debug("start bankTransaction with email "+email);
+        boolean isOk = false;
+        double amount = -1;
+        Person myPerson = null;
+        myPerson =  personDao.findByEmail(email);
+
+        //Check if person exist
+        if (myPerson != null) {
+            //Valid authorisation  with the bank ==> Imagine, you are connected to the bank to get Authorisation
+            //Check fields are not empty
+            Date now = new Date();
+            //Credit amount of the person
+            Account myAccount = accountDao.findByPerson(myPerson);
+            amount = myAccount.getBalance() - bankTransfert.getAmount();
+            //There is enough money
+            if (amount>=0) {
+                myAccount.setBalance(amount);
+                accountDao.save(myAccount);
+
+                //Get bankinfo for id
+                BankInfo bankInfoInput = bankTransfert.getBankinfo();
+                if (bankInfoInput != null) {
+
+                    BankInfo bankInfo = bankInfoDao.findById(bankInfoInput.getId());
+                    bankTransfert.setBankinfo(bankInfo);
+
+
+                    bankTransfert.setTransactionDate(now);
+
+                    ///bank Transfert  on transaction table.
+                    bankTransfertDao.save(bankTransfert);
+                } else {
+                    amount = -1;
+                    logger.error("error on bankinfo for " + email + "and id bankinfo" + bankTransfert.getBankinfo());
+                }
+            }else {
+                amount = -1;
+                logger.error("error on bankinfo for " + email + " : not enough money : balance :" + myAccount.getBalance());
+            }
+
+        } else {
+            amount = -1;
+            logger.error("nobody for this email " + email);
+        }
+        logger.debug("bankTransaction finish correctly with email "+email);
+
+        return amount;
+
+    }
 }

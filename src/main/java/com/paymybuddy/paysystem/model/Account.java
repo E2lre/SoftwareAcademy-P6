@@ -18,6 +18,7 @@ public class Account implements Serializable {
 
     @Id
     private long id;
+    @Column(columnDefinition = "Decimal(6,2)")
     private double balance;
 
     @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)

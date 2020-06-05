@@ -14,7 +14,8 @@ public class BankInfo implements Serializable {
     private static final Logger logger = LogManager.getLogger(BankInfo.class);
 
     @Id
-    @GeneratedValue
+    //@GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     @NotNull
     private int type;
@@ -34,6 +35,8 @@ public class BankInfo implements Serializable {
     public BankInfo() {
 
     }
+
+
     public BankInfo(int id, int type, String info, String description) {
         this.id = id;
         this.type = type;
@@ -43,6 +46,14 @@ public class BankInfo implements Serializable {
     }
     public BankInfo(Person person, int type, String info, String description) {
         this.person = person;
+        this.type = type;
+        this.info = info;
+        this.description = description;
+
+    }
+    public BankInfo(Person person, int id,int type, String info, String description) {
+        this.person = person;
+        this.id = id;
         this.type = type;
         this.info = info;
         this.description = description;

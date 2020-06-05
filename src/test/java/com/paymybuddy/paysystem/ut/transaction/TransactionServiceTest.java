@@ -1,13 +1,7 @@
 package com.paymybuddy.paysystem.ut.transaction;
 
-import com.paymybuddy.paysystem.dao.AccountDao;
-import com.paymybuddy.paysystem.dao.CreditDao;
-import com.paymybuddy.paysystem.dao.PaymentDao;
-import com.paymybuddy.paysystem.dao.PersonDao;
-import com.paymybuddy.paysystem.model.Account;
-import com.paymybuddy.paysystem.model.Credit;
-import com.paymybuddy.paysystem.model.Payment;
-import com.paymybuddy.paysystem.model.Person;
+import com.paymybuddy.paysystem.dao.*;
+import com.paymybuddy.paysystem.model.*;
 import com.paymybuddy.paysystem.model.questions.TransactionBuddy;
 import com.paymybuddy.paysystem.service.transaction.TransactionService;
 import com.paymybuddy.paysystem.service.util.UtilService;
@@ -47,6 +41,12 @@ public class TransactionServiceTest {
     private PaymentDao paymentDao;
     @MockBean
     private CreditDao creditDao;
+    @MockBean
+    private CreditCardOperationDao creditCardOperationDao;
+    @MockBean
+    private BankTransfertDao bankTransfertDao;
+    @MockBean
+    private BankInfoDao bankInfoDao;
     @MockBean
     private UtilService utilService;
 
@@ -175,4 +175,160 @@ public class TransactionServiceTest {
         //THEN
         assertThat(result).isNull();
     }
+
+    /*------------------------ CreditCardOperation ---------------------------------*/
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    public void creditCardTransaction_correctInforationCB_transfertIsDone(){
+        //GIVEN
+
+        CreditCardOperation creditCardOperation= new CreditCardOperation();
+        creditCardOperation.setCreditCardNumber(1234567890);
+        creditCardOperation.setCcv(123);
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date expirationDate;
+            Date now = new Date();
+        expirationDate = simpleDateFormat.parse("01/01/2030");
+        creditCardOperation.setExpirationDate(expirationDate);
+        } catch (ParseException e){
+            logger.error(e.getMessage());
+        }
+        creditCardOperation.setAmount(10);
+        creditCardOperation.setDescription("Description CB Test");
+
+       // double amount = 10;
+        myAccount.setBalance(0);
+        Mockito.when(personDao.findByEmail(anyString())).thenReturn(myPerson);
+        Mockito.when(accountDao.findByPerson(myPerson)).thenReturn(myAccount);
+
+        creditCardOperationDao.save(creditCardOperation);
+
+        //WHEN
+        double result = transactionService.creditCardTransaction(emailConst,creditCardOperation);
+        //THEN
+        assertThat(result).isNotNull();
+        assertThat(result).isNotEqualTo(-1);
+        assertThat(result).isEqualTo(10);
+    }
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    public void creditCardTransaction_incorrectInforationCB_errorIsReturn(){
+        //GIVEN
+
+        CreditCardOperation creditCardOperation= new CreditCardOperation();
+        creditCardOperation.setCreditCardNumber(1234567890);
+        creditCardOperation.setCcv(123);
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date expirationDate;
+            Date now = new Date();
+            expirationDate = simpleDateFormat.parse("01/01/2030");
+            creditCardOperation.setExpirationDate(expirationDate);
+        } catch (ParseException e){
+            logger.error(e.getMessage());
+        }
+        creditCardOperation.setAmount(10);
+        creditCardOperation.setDescription("Description CB Test");
+
+        // double amount = 10;
+        myAccount.setBalance(0);
+        Mockito.when(personDao.findByEmail(anyString())).thenReturn(null);
+        Mockito.when(accountDao.findByPerson(myPerson)).thenReturn(myAccount);
+
+        creditCardOperationDao.save(creditCardOperation);
+
+        //WHEN
+        double result = transactionService.creditCardTransaction(emailConst,creditCardOperation);
+        //THEN
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(-1);
+    }
+    /*------------------------ bank transfert Operation ---------------------------------*/
+
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    public void bankTransaction_correctInformation_transfertIsDone(){
+        //GIVEN
+        BankInfo myBankInfo = new BankInfo();
+        myBankInfo.setDescription("Mon RIB");
+        myBankInfo.setInfo("Info sur mon RIB");
+        myBankInfo.setType(1);
+        myBankInfo.setPerson(myPerson);
+
+        BankTransfert bankTransfert= new BankTransfert();
+        bankTransfert.setAmount(10);
+        bankTransfert.setTransfertOrder(123465789);
+        bankTransfert.setDescription("Virement bancaire");
+        bankTransfert.setBankinfo(myBankInfo);
+
+
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date expirationDate;
+            expirationDate = simpleDateFormat.parse("01/01/2030");
+            bankTransfert.setTransactionDate(expirationDate);
+        } catch (ParseException e){
+            logger.error(e.getMessage());
+        }
+        Mockito.when(personDao.findByEmail(anyString())).thenReturn(myPerson);
+        Mockito.when(accountDao.findByPerson(myPerson)).thenReturn(myAccount);
+
+        Mockito.when(accountDao.save(any(Account.class))).thenReturn(myAccount);
+        Mockito.when(bankInfoDao.findById(2)).thenReturn(myBankInfo);
+        Mockito.when(bankTransfertDao.save(any(BankTransfert.class))).thenReturn(bankTransfert);
+        //Mockito.when(transactionService.creditCardTransaction(anyString(),any(CreditCardOperation.class))).thenReturn(10);
+
+
+        //WHEN
+        double result = transactionService.bankTransaction(emailConst,bankTransfert);
+        //THEN
+
+        assertThat(result).isNotNull();
+
+        assertThat(result).isEqualTo(990);
+    }
+    @Test
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    public void bankTransaction_incorrectInformation_errorIsReturn(){
+        //GIVEN
+        BankInfo myBankInfo = new BankInfo();
+        myBankInfo.setDescription("Mon RIB");
+        myBankInfo.setInfo("Info sur mon RIB");
+        myBankInfo.setType(1);
+        myBankInfo.setPerson(myPerson);
+
+        BankTransfert bankTransfert= new BankTransfert();
+        bankTransfert.setAmount(10000);
+        bankTransfert.setTransfertOrder(123465789);
+        bankTransfert.setDescription("Virement bancaire");
+        bankTransfert.setBankinfo(myBankInfo);
+
+
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date expirationDate;
+            expirationDate = simpleDateFormat.parse("01/01/2030");
+            bankTransfert.setTransactionDate(expirationDate);
+        } catch (ParseException e){
+            logger.error(e.getMessage());
+        }
+        Mockito.when(personDao.findByEmail(anyString())).thenReturn(myPerson);
+        Mockito.when(accountDao.findByPerson(myPerson)).thenReturn(myAccount);
+
+        Mockito.when(accountDao.save(any(Account.class))).thenReturn(myAccount);
+        Mockito.when(bankInfoDao.findById(2)).thenReturn(myBankInfo);
+        Mockito.when(bankTransfertDao.save(any(BankTransfert.class))).thenReturn(bankTransfert);
+        //Mockito.when(transactionService.creditCardTransaction(anyString(),any(CreditCardOperation.class))).thenReturn(10);
+
+
+        //WHEN
+        double result = transactionService.bankTransaction(emailConst,bankTransfert);
+        //THEN
+
+        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(-1);
+    }
+
 }

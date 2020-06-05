@@ -22,9 +22,14 @@ public class PersonDTO {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = birthdate;
         this.email = email;
         this.buddy = buddy;
+        if (birthdate == null) {
+            this.birthdate = null;
+        }
+        else {
+            this.birthdate = new Date(birthdate.getTime());
+        }
     }
     public long getId() {
         return id;
@@ -51,11 +56,17 @@ public class PersonDTO {
     }
 
     public Date getBirthdate() {
-        return birthdate;
+        Date localDate = birthdate;
+        return localDate;
     }
 
     public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+        if (birthdate == null) {
+            this.birthdate = null;
+        }
+        else {
+            this.birthdate = new Date(birthdate.getTime());
+        }
     }
 
     public String getEmail() {

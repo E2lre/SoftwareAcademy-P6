@@ -18,6 +18,7 @@ public class Payment extends Transaction {
     @JoinColumn(name="transaction_id",foreignKey = @ForeignKey(name = "transaction_buddytransaction_fk"))
     private Transaction transaction;*/
     @NotNull
+    @Column(columnDefinition = "Decimal(6,2)")
     private double feeAmount;
 
 

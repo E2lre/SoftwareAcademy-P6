@@ -1,7 +1,9 @@
 package com.paymybuddy.paysystem.ut.person;
 
 import com.paymybuddy.paysystem.config.JwtTokenProvider;
+import com.paymybuddy.paysystem.dao.AccountDao;
 import com.paymybuddy.paysystem.dao.PersonDao;
+import com.paymybuddy.paysystem.model.Account;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
 //import com.paymybuddy.paysystem.model.questions.SignIn;
@@ -41,6 +43,8 @@ public class PersonServiceTest {
 
     @MockBean
     private PersonDao personDao;
+    @MockBean
+    private AccountDao accountDao;
     @MockBean
     private PasswordEncoder passwordEncoder;
     @MockBean
@@ -99,8 +103,10 @@ public class PersonServiceTest {
         Mockito.when(personDao.existsByEmail(anyString())).thenReturn(false);
         Mockito.when(passwordEncoder.encode(anyString())).thenReturn(encryptPasswordConst);
         Mockito.when(personDao.save(any(Person.class))).thenReturn(personMock);
+        Account myAccount = new Account();
+        Mockito.when(accountDao.save(any(Account.class))).thenReturn(myAccount);
         //Mockito.doNothing().when(personDao).save(any(Person.class));
-        Mockito.when(jwtTokenProvider.createToken(anyString(),any(List.class))).thenReturn(jwtTockenConst);
+       Mockito.when(jwtTokenProvider.createToken(anyString(),any(List.class))).thenReturn(jwtTockenConst);
         //WHEN
         String result = personService.signup(personMock);
         //THEN

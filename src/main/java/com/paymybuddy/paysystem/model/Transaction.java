@@ -16,7 +16,8 @@ public abstract class Transaction implements Serializable {
     private static final Logger logger = LogManager.getLogger(Transaction.class);
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     //@Id
@@ -30,6 +31,7 @@ public abstract class Transaction implements Serializable {
     //@Id
     //private int bankInfoId;
     @NotNull
+    @Column(columnDefinition = "Decimal(6,2)")
     private double amount;
     private String description;
     @NotNull

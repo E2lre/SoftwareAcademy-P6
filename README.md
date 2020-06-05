@@ -27,6 +27,7 @@ Execute drop.sql and create.sql
 
 # URI
 ##signup
+
 POST http://localhost:8080/signup
 
 boby example :
@@ -40,6 +41,7 @@ boby example :
 }
 
 ##signin
+
 POST http://localhost:8080/signin
 
 boby example :
@@ -48,11 +50,15 @@ boby example :
     "email": "james.bond@mi6.uk",
     "password": "abc"
 }
+
 ##list of persons
+
 GET http://localhost:8080/persons
 
 ##Create a Buddy
+
 POST http://localhost:8080/buddy
+
 boby example :
 
 {
@@ -63,13 +69,16 @@ boby example :
 }
 
 ##list my buddy
+
 GEST http://localhost:8080/buddy/{email}
 
 
 ##operate payement betwwen buddys
+
 POST http://localhost:8080/transaction/buddy
 
 boby example :
+
 {
     "myEmail": "james.bond@mi6.uk",
     "buddyEmail": "vesper.lynd@casinoroyal.com",
@@ -79,9 +88,11 @@ boby example :
 }
 
 ##list bank info for a person
+
 GET http://localhost:8080/bankinfo/{email}
 
-##create bankinfo for e person
+##create bankinfo for a person
+
 POST http://localhost:8080/bankinfo
 
 boby example :
@@ -96,9 +107,11 @@ boby example :
     }
     
 ##credit car operation
+
 POST http://localhost:8080/transaction/creditcard/{email}
 
 boby example :
+
 {
 	"creditCardNumber": "1234567890123456",
 	"expirationDate" :"2020-12-31",
@@ -108,9 +121,11 @@ boby example :
 }
 
 ##transfert money to the bank
+
 POST http://localhost:8080/transaction/bank/{email}
 
 boby example :
+
 {
 	"description" : "virement à la banque",
 	"amount" : "500",

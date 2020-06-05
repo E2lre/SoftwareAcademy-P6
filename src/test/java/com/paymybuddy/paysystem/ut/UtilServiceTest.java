@@ -41,12 +41,6 @@ public class UtilServiceTest {
     String emailConst = "tatiana.romanova@bonsbaisersderussie.ru";
     String birthdateConst = "01/13/1693";
     String passwordConst = "SPECTRE";
-    String encryptPasswordConst = "$2a$12$scj6PvgZYRLahntmwOmm/.PnXJjHYK2SpsgsWb6fFbZBr5nWpbmJ6";
-    String incorrectpasswordConst = "MI6";
-    String jwtTockenConst = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXkuZGF5QGRhbmdldXJlbWVudHZvdHJlLmZyIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9DTElFTlQifV0sImlhdCI6MTU5MDc2MTM1NCwiZXhwIjoxNTkwNzY0OTU0fQ.Wflx8fsnoUiUzruGKBLrS2PFL4DpKyoaZsi5bcQkakY";
-
-    String buddyFirstNameConst = "Pussy";
-    String buddyLastNameConst = "Galore";
     String buddyEmailConst = "pussy.galore@Goldfinger.or";
 
     @BeforeEach

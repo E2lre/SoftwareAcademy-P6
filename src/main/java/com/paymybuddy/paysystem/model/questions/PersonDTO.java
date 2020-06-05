@@ -5,6 +5,9 @@ import com.paymybuddy.paysystem.model.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This class is use for the response with PErson class, but without password
+ */
 public class PersonDTO {
 
 

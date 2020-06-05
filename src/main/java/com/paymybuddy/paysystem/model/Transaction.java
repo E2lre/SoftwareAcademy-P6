@@ -16,24 +16,20 @@ public abstract class Transaction implements Serializable {
     private static final Logger logger = LogManager.getLogger(Transaction.class);
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    //@Id
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "account_transaction_fk2"),name = "account_person_id")
     private Account account;
-/*    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "bankinfo_transaction_fk2"),name = "bankinfo_id")
-    private BankInfo bankinfo;*/
-    //private int accountPersonId;
-    //@Id
-    //private int bankInfoId;
+
     @NotNull
     @Column(columnDefinition = "Decimal(6,2)")
     private double amount;
+
     private String description;
+
     @NotNull
     private Date transactionDate;
 
@@ -50,13 +46,7 @@ public abstract class Transaction implements Serializable {
         else {
             this.transactionDate = new Date(transactionDate.getTime());
         }
-        //this.transactionDate = transactionDate;
-        //this.accountPersonId = accountPersonId;
-        //this.bankInfoId = bankInfoId;
-
     }
-
-
 
     public Long getId() {
         return id;

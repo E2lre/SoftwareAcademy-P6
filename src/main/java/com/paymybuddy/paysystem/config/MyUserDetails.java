@@ -13,7 +13,7 @@ public class MyUserDetails implements UserDetailsService {
 
     @Autowired
     private PersonDao personDao;
-    //private UserRepository userRepository;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -32,8 +32,6 @@ public class MyUserDetails implements UserDetailsService {
                 .credentialsExpired(false)//
                 .disabled(false)//
                 .build();
-
-        //.authorities(user.getRoles())//
     }
 
 }

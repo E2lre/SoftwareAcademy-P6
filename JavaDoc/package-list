@@ -1,0 +1,16 @@
+com.paymybuddy.paysystem
+com.paymybuddy.paysystem.config
+com.paymybuddy.paysystem.dao
+com.paymybuddy.paysystem.it
+com.paymybuddy.paysystem.model
+com.paymybuddy.paysystem.model.questions
+com.paymybuddy.paysystem.service.bankinfo
+com.paymybuddy.paysystem.service.person
+com.paymybuddy.paysystem.service.transaction
+com.paymybuddy.paysystem.service.util
+com.paymybuddy.paysystem.ut
+com.paymybuddy.paysystem.ut.bankinfo
+com.paymybuddy.paysystem.ut.person
+com.paymybuddy.paysystem.ut.transaction
+com.paymybuddy.paysystem.web.controller
+com.paymybuddy.paysystem.web.exceptions

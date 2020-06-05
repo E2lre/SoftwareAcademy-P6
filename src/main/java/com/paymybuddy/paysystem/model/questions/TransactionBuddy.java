@@ -1,5 +1,8 @@
 package com.paymybuddy.paysystem.model.questions;
 
+/**
+ * This calss is use for the transaction between 2 person.
+ */
 public class TransactionBuddy {
 
     private String myEmail;

@@ -3,7 +3,6 @@ package com.paymybuddy.paysystem.ut.person;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
-//import com.paymybuddy.paysystem.model.questions.SignIn;
 import com.paymybuddy.paysystem.service.person.PersonService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -54,9 +52,6 @@ public class PersonControllerTest {
     String birthdateConst = "01/13/1693";
     Date birthdate;
     String passwordConst = "SPECTRE";
-    String encryptPasswordConst = "$2a$12$scj6PvgZYRLahntmwOmm/.PnXJjHYK2SpsgsWb6fFbZBr5nWpbmJ6";
-    String incorrectpasswordConst = "MI6";
-    String jwtTockenConst = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXkuZGF5QGRhbmdldXJlbWVudHZvdHJlLmZyIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9DTElFTlQifV0sImlhdCI6MTU5MDc2MTM1NCwiZXhwIjoxNTkwNzY0OTU0fQ.Wflx8fsnoUiUzruGKBLrS2PFL4DpKyoaZsi5bcQkakY";
 
     String buddyFirstNameConst = "Pussy";
     String buddyLastNameConst = "Galore";
@@ -64,7 +59,6 @@ public class PersonControllerTest {
 
     String existEmail = "vesper.lynd@casinoroyal.com";
     String existPasswordConst = "abc";
-    String existIncorrectPasswordConst = "IncorrectPWD";
 
     @BeforeEach
     public void setUpEach() {

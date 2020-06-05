@@ -7,7 +7,6 @@ import com.paymybuddy.paysystem.model.Account;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.Role;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
-//import com.paymybuddy.paysystem.model.questions.SignIn;
 import com.paymybuddy.paysystem.service.util.UtilService;
 import com.paymybuddy.paysystem.web.exceptions.CustomException;
 import org.apache.logging.log4j.LogManager;
@@ -42,71 +41,36 @@ public class PersonServiceImpl implements PersonService {
     private UtilService utilService;
 
 
-  /*  @Override
-    @Transactional
-    //TODO A voir si on maintient
-    //@Transactional(readOnly = true)
-    //TDODO A voir si on maintient
-    public Person savePerson (Person person){
-        logger.debug("savePerson start. Email : " + person.getEmail());
-        Person resultPerson = null;
-//TODO rajouter filtre sur password en retour
-        //Check if email already exist
-        if (personDao.findByEmail(person.getEmail())== null) {
-            //Create person
-            Person personToSave = new Person();
-            personToSave = person;
-            personToSave.setPassword(passwordEncoder.encode(person.getPassword()));
-            resultPerson = personDao.save(personToSave);
-*//*             Long psnID = personToSave.getId();
-
-           psnID = Long.valueOf(5);
-
-            logger.debug ("PSNID = "+ psnID.toString());*//*
-
-            //Account acountPerson = new Account(psnID,0);
-            //Account acountPerson = new Account(psnID,0,resultPerson);
-            Account acountPerson = new Account(resultPerson,0);
-
-            Account accountResult = accountDao.save (acountPerson);
-            if (accountResult == null){
-                resultPerson = null;
-            }
-
-        }
-
-        return resultPerson;
-    }*/
-
-
-    /*public String signinOLD(SignIn signIn) {
-    //public String signin(String email, String password) {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signIn.getEmail(), signIn.getPassword()));
-            return jwtTokenProvider.createToken(signIn.getEmail(), personDao.findByEmail(signIn.getEmail()).getRoles());
-        } catch (AuthenticationException e) {
-            // throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
-            logger.error("Invalid username/password supplied for " + signIn.getEmail());
-            return "";
-        }
-    }*/
+    /**
+     * Signin a user
+     * @param person only email en password are povided
+     * @return JWT tocken, blank if error
+     */
     public String signin(Person person) {
-        //public String signin(String email, String password) {
+       logger.info("start");
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(person.getEmail(), person.getPassword()));
+            logger.info("finish");
             return jwtTokenProvider.createToken(person.getEmail(), personDao.findByEmail(person.getEmail()).getRoles());
         } catch (AuthenticationException e) {
-            // throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+
             logger.error("Invalid username/password supplied for " + person.getEmail());
             return "";
         }
     }
+
+    /**
+     * Signup a new user
+     * @param person Personal informations
+     * @return JWT token, blank if error
+     */
     @Transactional
     public String signup(Person person) {
         boolean result = false;
+        logger.info("start");
         if (!personDao.existsByEmail(person.getEmail())) {
             person.setPassword(passwordEncoder.encode(person.getPassword()));
-            person.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT))); //TODO ICICICICICICICICICICICIU
+            person.setRoles(new ArrayList<Role>(Arrays.asList(Role.ROLE_CLIENT)));
             Person resultPerson = personDao.save(person);
             if (resultPerson != null) {
                 Account acountPerson = new Account(person, 0);
@@ -119,13 +83,20 @@ public class PersonServiceImpl implements PersonService {
             }
         }
         if (result) {
+            logger.info("start");
             return jwtTokenProvider.createToken(person.getEmail(), person.getRoles());
         } else {
-            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY); //TODO CUSOMISER L'ERREUR
+            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 
+    /**
+     * Add a freind to a person
+     * @param myBuddy Information to create a buddy
+     * @return Information about the buddy, null if error
+     */
     public MyBuddy addBuddy (MyBuddy myBuddy) {
+        logger.info("start");
         MyBuddy myBuddyResult = null;
         Person myPerson = null;
         Person buddyPerson = null;
@@ -149,6 +120,7 @@ public class PersonServiceImpl implements PersonService {
 
             }
         }
+        logger.info("finish");
         return myBuddyResult;
     }
 
@@ -157,17 +129,27 @@ public class PersonServiceImpl implements PersonService {
      * @return list of person
      */
     public List<Person> findAll (){
+        logger.info("start/finish");
         return personDao.findAll();
-
     }
+
+    /**
+     * Fin the list of friend for a person
+     * @param email Email of the person to fin his friends
+     * @return list of friend. return null if eoor
+     */
     public List<Person> findFriendByEmail(String email){
+        logger.info("start");
         Person myPerson = null;
         List<Person> buddys = null;
         // Check if my email exist
         myPerson =  personDao.findByEmail(email);
         if (myPerson != null) {
             buddys = myPerson.getBuddy();
+        } else{
+            logger.error("Nobody found for email " + email);
         }
+        logger.info("finish");
         return buddys;
     }
 }

@@ -13,28 +13,10 @@ public class Payment extends Transaction {
 
     private static final Logger logger = LogManager.getLogger(Payment.class);
 
-/*    @Id
-    @OneToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="transaction_id",foreignKey = @ForeignKey(name = "transaction_buddytransaction_fk"))
-    private Transaction transaction;*/
     @NotNull
     @Column(columnDefinition = "Decimal(6,2)")
     private double feeAmount;
 
-
-
-    /*
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumns(
-                foreignKey = @ForeignKey(name = "buddy_payment_fk2"), value =
-                {
-       //                 @JoinColumn( name = "id", referencedColumnName="id"), //TODO Vérifier si necessaire
-                        @JoinColumn( name = "buddy_person_id", referencedColumnName="person_id"),
-                        @JoinColumn( name = "buddy_friend_person_id", referencedColumnName="friend_person_id")
-                }
-        )
-        private Buddy buddy;
-    */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "payment_person_fk"),name = "payment_person_id")
     private Person buddyPayment;
@@ -62,6 +44,5 @@ public class Payment extends Transaction {
     public void setBuddyPayment(Person buddyPayment) {
         this.buddyPayment = buddyPayment;
     }
-
 
 }

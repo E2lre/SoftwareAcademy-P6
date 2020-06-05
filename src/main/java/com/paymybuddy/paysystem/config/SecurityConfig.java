@@ -41,12 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()//
                 .antMatchers("/signin*").permitAll()//
                 .antMatchers("/signup").permitAll()//
-                .antMatchers("/Persons").permitAll()// //TODO a retirer
-                .antMatchers("/addBuddy").permitAll()// //TODO a retirer
-                .antMatchers("/PersonBuddy/*").permitAll()// //TODO a retirer
-                .antMatchers("/TransactionBuddy").permitAll()// //TODO a retirer
-                .antMatchers("/CreateLogin").permitAll()//
-                .antMatchers("/Personpwd/*").permitAll()//  //TODO non a changer
                .antMatchers("/h2-console/**/**").permitAll()
                 // Disallow everything else..
                 .anyRequest().authenticated();
@@ -90,38 +84,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 }
 
-/*code avant mise en place de JWT*/
-/*@Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final Logger logger = LogManager.getLogger(SecurityConfig.class);
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
-                .and()
-                .httpBasic();
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception {
-
-        logger.info("security start");
-        ResourceBundle bundle = ResourceBundle.getBundle("application");
-        String myUser = bundle.getString("application.security.user.name");
-        String myPwd = bundle.getString("application.security.user.password");
-        myPwd = "{noop}" +myPwd;
-        logger.info( myUser + "  -  " +myPwd);
-
-     auth.inMemoryAuthentication()
-                .withUser(myUser)
-                .password(myPwd)
-                .roles("USER");
-    }
-
-    @Bean
-    public static PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-}*/

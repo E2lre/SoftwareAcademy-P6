@@ -29,27 +29,16 @@ public class PersonController {
     @Autowired
     private PersonService personService;
     /*---------------------------  GET Find All -----------------------------*/
+
     /**
-     * get all person in data base
-     * @return list of person
+     * Get all person in data base
+     * @return list of person with their buddys
+     * @throws PersonListException Error if noboby in data base or systeme error
      */
- /*   @GetMapping(value = "personsOLD")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Person> listPersons()  throws PersonListException {
-        //List<Person> personList = new ArrayList<>();
-        List<Person> personList = personService.findAll();
-        if ((personList == null) || (personList.isEmpty())){
-            throw new PersonListException("Impossible to return person List ");
-        }
-
-        return personList;
-
-
-    }*/
     @GetMapping(value = "persons")
     @ResponseStatus(HttpStatus.OK)
-    public List<PersonDTO> listPersons2()  throws PersonListException {
-
+    public List<PersonDTO> listPersons()  throws PersonListException {
+        logger.info("listPersons start");
         List<Person> personList = personService.findAll();
         if ((personList == null) || (personList.isEmpty())) {
             throw new PersonListException("Impossible to return person List ");
@@ -62,123 +51,92 @@ public class PersonController {
             PersonDTO personDTO = modelMapper.map(ePerson, PersonDTO.class);
             personDTOList.add(personDTO);
         }
+        logger.info("findFriendByEmail finish");
         return personDTOList;
-
-
     }
     /*---------------------------  GET Find friend By email -----------------------------*/
 
+    /**
+     * Find all the friend of a person By the email of the person
+     * @param email Email of the person to get their buddys
+     * @return List of buddys
+     * @throws BuddyListException Error if buddy list is empty or system error
+     */
     @GetMapping(value = "buddy/{email}")
     @ResponseStatus(HttpStatus.OK)
     public List<Person> findFriendByEmail(@PathVariable String email) throws BuddyListException{
+        logger.info("findFriendByEmail start");
 
         List<Person> buddyList = personService.findFriendByEmail(email);
         if ((buddyList == null) || (buddyList.isEmpty())){
             throw new BuddyListException("Impossible to return buddy List pour email " + email);
         }
+        logger.info("findFriendByEmail finish");
         return buddyList;
-
     }
 
     /*---------------------------  Get SignIn -----------------------------*/
 
     /**
-     * API to sign in
-     * @param signIn email and password
-     * @return JWT tocken if ok
+     * Signin for an existant person (user)
+     * @param person Only email and password must be provide
+     * @return JWT tocken
      * @throws SinginIncorrectEmailPasswordException exception if error
      */
-  /*  @GetMapping(value = "/signinOLD")
-    @ResponseStatus(HttpStatus.OK)
-    public String checkPwdOLD(@RequestBody SignIn signIn) throws SinginIncorrectEmailPasswordException {
-        logger.info("Signin");
-        String result = personService.signinOLD(signIn);
-        if ((result == null) || (result.isEmpty())){
-            throw new SinginIncorrectEmailPasswordException(" Incorrect Email/Password for email " + signIn.getEmail());
-        }
-
-        return result;
-
-    }*/
     @GetMapping(value = "/signin")
     @ResponseStatus(HttpStatus.OK)
     public String checkPwd(@RequestBody Person person) throws SinginIncorrectEmailPasswordException {
-        logger.info("Signin");
+        logger.info("checkPwd start");
         String result = personService.signin(person);
         if ((result == null) || (result.isEmpty())){
             throw new SinginIncorrectEmailPasswordException(" Incorrect Email/Password for email " + person.getEmail());
         }
-
+        logger.info("checkPwd finish");
         return result;
-
     }
-    /*---------------------------  Post CRUD-----------------------------*/
-/*    //TODO A ssuprimer si necessaire
-    //@JsonView(View.User.class)
-    @PostMapping(value="/Person")
-    public Person savePerson(@RequestBody Person person) {
 
-        logger.info("Person");
-        return personService.savePerson(person);
-    }*/
 
     /*---------------------------  Post Signup-----------------------------*/
-    //@JsonView(View.User.class)
-
     /**
-     *  API to sign up
-     * @param person info to create person and login
-     * @return jwt token if ok
+     * Signup for a new person (user)
+     * @param person All the information to create a new user
+     * @return JWT tocken
+     * @throws SignupException Exception if error
      */
     @PostMapping(value="/signup")
     @ResponseStatus(HttpStatus.CREATED)
     public String signup(@RequestBody Person person) throws SignupException {
 
-        logger.info("signup start : " );
+        logger.info("signup start");
         String Result = personService.signup(person);
 
 
         if (Result == null) {
             throw new SignupException(" Impossible to Signup email " + person.getEmail());
         }
+        logger.info("checkPwd finish");
         return Result;
     }
-    /*--------------------------- POST : Creation d'un user et de son compte associé----------------*/
-    //@JsonView(View.User.class)
-/*    //TODO a supprimer
-    @PostMapping(value="/CreateLogin")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Person createLogin(@RequestBody Person person) throws PersonCanNotbeAddedException {
 
-        logger.info("createLogin start : " + person);
-        Person personResult = personService.savePerson(person);
-
-
-        if (personResult == null) {
-            throw new PersonCanNotbeAddedException(" Email " + person.getEmail() +" already exist for " + person.getFirstName() + " " + person.getLastName() +". Person not created");
-        }
-
-        return personResult;
-        }*/
 /*---------------------------  Post addBuddy -----------------------------*/
-/**
- *
- * @param myBuddy
- * @return
- */
 
+    /**
+     * Create a buddy relation between two persons
+     * @param myBuddy All the information to create a buddy relation
+     * @return All the information about the buddy relation
+     * @throws BuddyCanNotbeAddedException Exception if error
+     */
     @PostMapping(value="/buddy")
     @ResponseStatus(HttpStatus.CREATED)
     public MyBuddy addBuddy(@RequestBody MyBuddy myBuddy) throws BuddyCanNotbeAddedException {
         logger.info("addBuddy start : " + myBuddy.getBuddyEmail());
-
-        logger.info("buddy Controler");
 
         MyBuddy buddyResult = personService.addBuddy(myBuddy);
 
         if (buddyResult == null) {
             throw new BuddyCanNotbeAddedException(" Buddy " + myBuddy.getBuddyEmail() +" can not be create");
         }
+        logger.info("addBuddy finish ");
         return buddyResult;
     }
 }

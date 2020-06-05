@@ -21,61 +21,45 @@ import java.util.Set;
         @UniqueConstraint(columnNames = "email", name = "uniqueEmailConstraint")})
 public class Person implements Serializable {
 
-    private static final Logger logger = LogManager.getLogger(Person.class);
 
     @Id
     @GeneratedValue
-    //@JsonView(View.User.class)
     private long id;
 
     @Column(name="firstname",length=100)
     @NotNull
-    //@JsonView(View.User.class)
     private String firstName;
 
     @Column(name="lastname",length=100)
     @NotNull
-    //@JsonView(View.User.class)
     private String lastName;
 
-    //@JsonView(View.User.class)
+
     private Date birthdate;
 
     @Column(length=500,unique=true)
-    @Email   //TODO : indiquer le nom de l'index corretement
+    @Email
     @NotNull
-    //@JsonView(View.User.class)
     private String email;
 
     @Column(length=200)
     @NotNull
     private String password;
 
-
     @ManyToMany(fetch=FetchType.EAGER)
     private List<Person> buddy;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
-    //@JsonView(View.User.class)
     private List<BankInfo> bankinfos;
 
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
-
-/*    @OneToMany(mappedBy = "person_id","friend_person_id")
-    private List<Buddy> buddy;*/
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "buddyCredit")
     private List<Credit> credits;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "buddyPayment")
     private List<Payment> payments;
-
-
-
- /*    @OneToMany(mappedBy = "friend_person_id")
-    private List<Buddy> buddy;
-*/
 
     public Person() {
     }
@@ -86,7 +70,6 @@ public class Person implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        //this.birthdate = birthdate;
         if (birthdate == null) {
             this.birthdate = null;
         }
@@ -142,6 +125,7 @@ public class Person implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getPassword() {
         return password;
     }
@@ -161,6 +145,7 @@ public class Person implements Serializable {
     public List<Person> getBuddy() {
         return buddy;
     }
+
     public void setBuddy(List<Person> buddy) {
         this.buddy = buddy;
     }

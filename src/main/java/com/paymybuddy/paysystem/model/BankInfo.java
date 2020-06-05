@@ -14,21 +14,21 @@ public class BankInfo implements Serializable {
     private static final Logger logger = LogManager.getLogger(BankInfo.class);
 
     @Id
-    //@GeneratedValue
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+
     @NotNull
     private int type;
+
     @NotNull
     private String info;
+
     private String description;
 
-     //private int accountPersonId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "bankinfo_person_fk"),name = "bankinfo_person_id")
     private Person person;
-    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "bankinfo")
-    private List<Transaction> transactions;*/
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bankinfo")
     private List<BankTransfert> bankTransferts;
 
@@ -111,16 +111,5 @@ public class BankInfo implements Serializable {
                 ", person=" + person +
                 '}';
     }
-
-/*    public int getAccountPersonId() {
-        return accountPersonId;
-    }
-
-    public void setAccountPersonId(int accountPersonId) {
-        this.accountPersonId = accountPersonId;
-    }*/
-
-
-
 
 }

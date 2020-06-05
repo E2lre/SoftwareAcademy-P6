@@ -3,10 +3,10 @@ package com.paymybuddy.paysystem.model.questions;
 public class MyBuddy {
 
 
-    private String myEmail;
-    private String buddyEmail;
-    private String buddyFirstname;
-    private String buddyLastname;
+    private String myEmail; //Email of  the person witch want to add a friend (in the question)
+    private String buddyEmail; //Friend email (in the question)
+    private String buddyFirstname; // Firstname of the person (in the response)
+    private String buddyLastname; // Lastame of the person (in the response)
 
     public MyBuddy() {
     }

@@ -6,7 +6,6 @@ import com.paymybuddy.paysystem.dao.PersonDao;
 import com.paymybuddy.paysystem.model.Account;
 import com.paymybuddy.paysystem.model.Person;
 import com.paymybuddy.paysystem.model.questions.MyBuddy;
-//import com.paymybuddy.paysystem.model.questions.SignIn;
 import com.paymybuddy.paysystem.service.person.PersonService;
 import com.paymybuddy.paysystem.service.util.UtilService;
 import com.paymybuddy.paysystem.web.exceptions.CustomException;
@@ -18,7 +17,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -50,8 +48,6 @@ public class PersonServiceTest {
     @MockBean
     private JwtTokenProvider jwtTokenProvider;
     @MockBean
-    private AuthenticationManager authenticationManager;
-    @MockBean
     private UtilService utilService;
 
     private Person personMock;
@@ -63,11 +59,7 @@ public class PersonServiceTest {
     String birthdateConst = "01/13/1693";
     String passwordConst = "SPECTRE";
     String encryptPasswordConst = "$2a$12$scj6PvgZYRLahntmwOmm/.PnXJjHYK2SpsgsWb6fFbZBr5nWpbmJ6";
-    String incorrectpasswordConst = "MI6";
     String jwtTockenConst = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXkuZGF5QGRhbmdldXJlbWVudHZvdHJlLmZyIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9DTElFTlQifV0sImlhdCI6MTU5MDc2MTM1NCwiZXhwIjoxNTkwNzY0OTU0fQ.Wflx8fsnoUiUzruGKBLrS2PFL4DpKyoaZsi5bcQkakY";
-
-    String buddyFirstNameConst = "Pussy";
-    String buddyLastNameConst = "Galore";
     String buddyEmailConst = "pussy.galore@Goldfinger.or";
 
     @BeforeEach
@@ -105,8 +97,7 @@ public class PersonServiceTest {
         Mockito.when(personDao.save(any(Person.class))).thenReturn(personMock);
         Account myAccount = new Account();
         Mockito.when(accountDao.save(any(Account.class))).thenReturn(myAccount);
-        //Mockito.doNothing().when(personDao).save(any(Person.class));
-       Mockito.when(jwtTokenProvider.createToken(anyString(),any(List.class))).thenReturn(jwtTockenConst);
+        Mockito.when(jwtTokenProvider.createToken(anyString(),any(List.class))).thenReturn(jwtTockenConst);
         //WHEN
         String result = personService.signup(personMock);
         //THEN
@@ -114,9 +105,6 @@ public class PersonServiceTest {
         assertThat(result).isEqualTo(jwtTockenConst);
         verify(passwordEncoder, Mockito.times(1)).encode(anyString());
         verify(personDao, Mockito.times(1)).save(any(Person.class));
-
-
-
     }
 
     /**
@@ -130,7 +118,6 @@ public class PersonServiceTest {
         Mockito.when(personDao.existsByEmail(anyString())).thenReturn(true);
         Mockito.when(passwordEncoder.encode(anyString())).thenReturn(encryptPasswordConst);
         Mockito.when(personDao.save(any(Person.class))).thenReturn(personMock);
-        //Mockito.doNothing().when(personDao).save(any(Person.class));
         Mockito.when(jwtTokenProvider.createToken(anyString(), any(List.class))).thenReturn(jwtTockenConst);
         //WHEN
         //THEN
@@ -158,8 +145,6 @@ public class PersonServiceTest {
         assertThat(buddyResult).isNotNull();
         assertThat(buddyResult.getBuddyFirstname()).isNotEmpty();
         assertThat(buddyResult.getBuddyLastname()).isNotEmpty();
-
-
     }
 
     /**
@@ -199,9 +184,6 @@ public class PersonServiceTest {
         List<Person> personResultList =  personService.findAll();
         //THEN
         assertThat(personResultList).isNotEmpty();
-
-
-
     }
     /*------------------------ findFriendByEmail ---------------------------------*/
     /**
@@ -212,16 +194,13 @@ public class PersonServiceTest {
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     public void findFriendByEmail_giveAnExistingbuddyEmail_PersonIsReturn(){
         //GIVEN
-
         Mockito.when(personDao.findByEmail(anyString())).thenReturn(personMock);
 
         //WHEN
         List<Person> personResultList=  personService.findFriendByEmail(emailConst);
+
         //THEN
         assertThat(personResultList).isNotEmpty();
-
-
-
     }
 
     /**

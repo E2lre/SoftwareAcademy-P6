@@ -198,12 +198,10 @@ public class TransactionServiceTest {
         creditCardOperation.setAmount(10);
         creditCardOperation.setDescription("Description CB Test");
 
-       // double amount = 10;
         myAccount.setBalance(0);
         Mockito.when(personDao.findByEmail(anyString())).thenReturn(myPerson);
         Mockito.when(accountDao.findByPerson(myPerson)).thenReturn(myAccount);
-
-        creditCardOperationDao.save(creditCardOperation);
+        Mockito.when(creditCardOperationDao.save(any(CreditCardOperation.class))).thenReturn(creditCardOperation);
 
         //WHEN
         double result = transactionService.creditCardTransaction(emailConst,creditCardOperation);
@@ -236,8 +234,7 @@ public class TransactionServiceTest {
         myAccount.setBalance(0);
         Mockito.when(personDao.findByEmail(anyString())).thenReturn(null);
         Mockito.when(accountDao.findByPerson(myPerson)).thenReturn(myAccount);
-
-        creditCardOperationDao.save(creditCardOperation);
+        Mockito.when(creditCardOperationDao.save(any(CreditCardOperation.class))).thenReturn(creditCardOperation);
 
         //WHEN
         double result = transactionService.creditCardTransaction(emailConst,creditCardOperation);
@@ -274,12 +271,9 @@ public class TransactionServiceTest {
         }
         Mockito.when(personDao.findByEmail(anyString())).thenReturn(myPerson);
         Mockito.when(accountDao.findByPerson(myPerson)).thenReturn(myAccount);
-
         Mockito.when(accountDao.save(any(Account.class))).thenReturn(myAccount);
         Mockito.when(bankInfoDao.findById(2)).thenReturn(myBankInfo);
         Mockito.when(bankTransfertDao.save(any(BankTransfert.class))).thenReturn(bankTransfert);
-        //Mockito.when(transactionService.creditCardTransaction(anyString(),any(CreditCardOperation.class))).thenReturn(10);
-
 
         //WHEN
         double result = transactionService.bankTransaction(emailConst,bankTransfert);
@@ -298,7 +292,6 @@ public class TransactionServiceTest {
         myBankInfo.setInfo("Info sur mon RIB");
         myBankInfo.setType(1);
         myBankInfo.setPerson(myPerson);
-
         BankTransfert bankTransfert= new BankTransfert();
         bankTransfert.setAmount(10000);
         bankTransfert.setTransfertOrder(123465789);
@@ -316,12 +309,9 @@ public class TransactionServiceTest {
         }
         Mockito.when(personDao.findByEmail(anyString())).thenReturn(myPerson);
         Mockito.when(accountDao.findByPerson(myPerson)).thenReturn(myAccount);
-
         Mockito.when(accountDao.save(any(Account.class))).thenReturn(myAccount);
         Mockito.when(bankInfoDao.findById(2)).thenReturn(myBankInfo);
         Mockito.when(bankTransfertDao.save(any(BankTransfert.class))).thenReturn(bankTransfert);
-        //Mockito.when(transactionService.creditCardTransaction(anyString(),any(CreditCardOperation.class))).thenReturn(10);
-
 
         //WHEN
         double result = transactionService.bankTransaction(emailConst,bankTransfert);

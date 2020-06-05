@@ -55,18 +55,8 @@ public class TransactionControllerIT {
 
 
     //constantes de test
-    String firstNameConst = "Tatiana";
-    String lastNameConst = "Romanova";
     String emailConst = "james.bond@mi6.uk";
     String incorrectEmailConst = "hubert.bonisseurdelabath@oss117.fr";
-    String birthdateConst = "01/13/1693";
-    String passwordConst = "SPECTRE";
-    String encryptPasswordConst = "$2a$12$scj6PvgZYRLahntmwOmm/.PnXJjHYK2SpsgsWb6fFbZBr5nWpbmJ6";
-    String incorrectpasswordConst = "MI6";
-    String jwtTockenConst = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXkuZGF5QGRhbmdldXJlbWVudHZvdHJlLmZyIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9DTElFTlQifV0sImlhdCI6MTU5MDc2MTM1NCwiZXhwIjoxNTkwNzY0OTU0fQ.Wflx8fsnoUiUzruGKBLrS2PFL4DpKyoaZsi5bcQkakY";
-
-    String buddyFirstNameConst = "Pussy";
-    String buddyLastNameConst = "Galore";
     String buddyEmailConst = "vesper.lynd@casinoroyal.com";
 
     /*---------------------------------------- payBuddy-------------------------------*/
@@ -97,8 +87,6 @@ public class TransactionControllerIT {
 
         myAccount = accountDao.findByPerson(myPerson);
         assertThat(myAccount.getBalance()).isEqualTo(startBalance-transactionAmout-resultFeeAmount);
-
-
     }
 
     @Test
@@ -124,11 +112,7 @@ public class TransactionControllerIT {
                 .andDo(print())
                 .andExpect(status().isNotAcceptable());
 
-       // myAccount = accountDao.findByPerson(myPerson);
-       // assertThat(myAccount.getBalance()).isEqualTo(startBalance-resultFeeAmount);
-
-
-    }
+       }
 
     /*---------------------------------------- transactionCreditCard-------------------------------*/
 
@@ -164,12 +148,6 @@ public class TransactionControllerIT {
 
         myAccount = accountDao.findByPerson(myPerson);
         assertThat(myAccount.getBalance()).isEqualTo(startBalance+10);
-
-
-
-//TODO Ajouter des controles
-
-
     }
 
     @Test
@@ -198,9 +176,6 @@ public class TransactionControllerIT {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotAcceptable());
-
-//TODO Ajouter des controles
-
 
     }
     /*---------------------------------------- bank transfert Operation-------------------------------*/
@@ -254,7 +229,6 @@ public class TransactionControllerIT {
         bankTransfert.setAmount(10);
         bankTransfert.setTransfertOrder(123465789);
         bankTransfert.setDescription("Virement bancaire");
-        //Person myPerson = personDao.findByEmail(emailConst);
         BankInfo bankInfo = new BankInfo();
         bankInfo.setId(2);
         bankTransfert.setBankinfo(bankInfo);
@@ -269,7 +243,6 @@ public class TransactionControllerIT {
             logger.error(e.getMessage());
         }
 
-
         //WHEN THEN
         mockMvc.perform(post("/transaction/bank/"+incorrectEmailConst)
                 .content(asJsonString(bankTransfert))
@@ -278,8 +251,5 @@ public class TransactionControllerIT {
                 .andDo(print())
                 .andExpect(status().isNotAcceptable());
 
-
     }
-
-
 }

@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-//@EnableAutoConfiguration(exclude = {SecurityFilterAutoConfiguration.class, SecurityAutoConfiguration.class})
+
 @AutoConfigureTestDatabase
 public class PersonControllerIT {
 
@@ -41,40 +41,10 @@ public class PersonControllerIT {
     private MockMvc mockMvc;
 
     //constantes de test
-    String firstNameConst = "Tatiana";
-    String lastNameConst = "Romanova";
-    String emailConst = "tatiana.romanova@bonsbaisersderussie.ru";
-    String birthdateConst = "01/13/1693";
-    Date birthdate;
-    String passwordConst = "SPECTRE";
-    String encryptPasswordConst = "$2a$12$scj6PvgZYRLahntmwOmm/.PnXJjHYK2SpsgsWb6fFbZBr5nWpbmJ6";
-    String incorrectpasswordConst = "MI6";
-    String jwtTockenConst = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXkuZGF5QGRhbmdldXJlbWVudHZvdHJlLmZyIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9DTElFTlQifV0sImlhdCI6MTU5MDc2MTM1NCwiZXhwIjoxNTkwNzY0OTU0fQ.Wflx8fsnoUiUzruGKBLrS2PFL4DpKyoaZsi5bcQkakY";
-
-    String buddyFirstNameConst = "Pussy";
-    String buddyLastNameConst = "Galore";
-    String buddyEmailConst = "pussy.galore@Goldfinger.or";
-
     String existEmail = "vesper.lynd@casinoroyal.com";
     String existPasswordConst = "abc";
     String existIncorrectPasswordConst = "IncorrectPWD";
 
-  /*  @Before
-    public void beforeTest() throws MalformedURLException {
-        template = new TestRestTemplate(username, password);
-    }*/
-    /*---------------------------------------- GET -------------------------------*/
-   // @Test
-   // @WithMockUser(roles="USER")
-    public void PersonController_getExistingPerson_thePersonAskIsSended() throws Exception {
-
-        //GIVEN : Give an exiting Person
-        //template = new TestRestTemplate(username, password);
-        //WHEN //THEN return the station
-        mockMvc.perform(get("/Persons"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
     /*---------------------------------------- Signin-------------------------------*/
     @Test
     @WithMockUser(roles="USER")
@@ -84,15 +54,16 @@ public class PersonControllerIT {
         Person signin = new Person();
         signin.setEmail(existEmail);
         signin.setPassword(existPasswordConst);
+
         //WHEN //THEN return token
         mockMvc.perform(get("/signin")
                 .content(asJsonString(signin))
-                //.content(asJsonString(new Person("",existEmail,existPasswordConst)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
     @Test
     @WithMockUser(roles="USER")
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
@@ -104,13 +75,10 @@ public class PersonControllerIT {
         //WHEN //THEN return token
         mockMvc.perform(get("/signin")
                 .content(asJsonString(signin))
-                //.content(asJsonString(new SignIn(existEmail,existIncorrectPasswordConst)))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
-
-
     }
 
 }

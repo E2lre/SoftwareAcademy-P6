@@ -23,23 +23,35 @@ public class BankInfoController {
 
 /*---------------------------  Find Bankinfo by email -----------------------------*/
 
+    /**
+     * List bank information for a person
+     * @param email Email of the person
+     * @return List of information bank
+     * @throws BankInfoCanNotBeFoundException error if the person doesn't exist, ...
+     */
     @GetMapping(value = "bankinfo/{email}")
     public List<BankInfo> listBankInfo(@PathVariable String email) throws BankInfoCanNotBeFoundException {
+        logger.info("listBankInfo start ");
         List<BankInfo> bankInfoListResult =null;
         bankInfoListResult = bankInfoService.getBankInfo(email);
         if (bankInfoListResult == null) {
             throw new BankInfoCanNotBeFoundException(" BankInfo can not be found for email "+ email);
         }
-
+        logger.info("listBankInfo finsih ");
         return bankInfoListResult;
     }
 
 /*--------------------------- POST : Creation d'un bankinfo pour un email ----------------*/
 
+    /**
+     * Create info bank for a person
+     * @param bankInfo Info bank for the person (contain email)
+     * @return Info bank created
+     * @throws BankInfoCanNotbeAddedException Error if the person doesn't exist, ...
+     */
     @PostMapping(value="/bankinfo")
     @ResponseStatus(HttpStatus.CREATED)
     public BankInfo saveBankinfo(@RequestBody BankInfo bankInfo) throws BankInfoCanNotbeAddedException {
-
         logger.info("SaveBankinfo start : " + bankInfo);
 
         BankInfo bankinfoResult = bankInfoService.saveBankInfo(bankInfo);
@@ -48,7 +60,7 @@ public class BankInfoController {
         if (bankinfoResult == null) {
             throw new BankInfoCanNotbeAddedException(" BankInfo not created for email "+ bankInfo.getPerson().getEmail());
         }
-
+        logger.info("SaveBankinfo finsih ");
         return bankinfoResult;
     }
 

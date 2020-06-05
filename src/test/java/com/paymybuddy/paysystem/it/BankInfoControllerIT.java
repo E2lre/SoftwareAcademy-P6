@@ -37,7 +37,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-//@EnableAutoConfiguration(exclude = {SecurityFilterAutoConfiguration.class, SecurityAutoConfiguration.class})
 @AutoConfigureTestDatabase
 public class BankInfoControllerIT {
 
@@ -70,8 +69,6 @@ public class BankInfoControllerIT {
         mockMvc.perform(get("/bankinfo/"+emailConst))
                  .andDo(print())
                  .andExpect(status().isOk());
-
-
     }
 
     @Test
@@ -84,8 +81,6 @@ public class BankInfoControllerIT {
         mockMvc.perform(get("/bankinfo/"+incorrectEmailConst))
                 .andDo(print())
                 .andExpect(status().isNotFound());
-
-
     }
     /*---------------------------------------- saveBankInfo -------------------------------*/
     @Test
@@ -107,8 +102,6 @@ public class BankInfoControllerIT {
         List<BankInfo> myBankInfoList2 = bankInfoDao.findByPerson(myPerson);
 
         assertThat(myBankInfoList2.size()).isEqualTo(myBankInfoList1.size() + 1);
-
-
     }
 
     @Test
@@ -123,7 +116,6 @@ public class BankInfoControllerIT {
         myPerson.setFirstName(incorrectFirstnameConst);
         myPerson.setEmail(incorrectEmailConst);
 
-
         //WHEN THEN
         mockMvc.perform(post("/bankinfo")
                 .content(asJsonString(new BankInfo(myPerson,type,info,description)))
@@ -131,8 +123,6 @@ public class BankInfoControllerIT {
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotAcceptable());
-
-
 
     }
 }

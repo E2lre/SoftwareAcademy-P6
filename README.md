@@ -19,10 +19,10 @@ What things you need to install the software and how to install them
 # Installation
 Execute drop.sql and create.sql
 
-#Class Diagram
+# Class Diagram
 ![ScreenShot](D-Class V5.4.jpg)
 
-#MPD
+# MPD
 ![ScreenShot](paymybuddy1.0.png)
 
 # URI

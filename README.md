@@ -26,7 +26,7 @@ Execute drop.sql and create.sql
 ![ScreenShot](paymybuddy1.0.png)
 
 # URI
-##signup
+## Signup
 
 POST http://localhost:8080/signup
 
@@ -40,7 +40,7 @@ boby example :
     "password": "SPECTRE"
 }
 
-##signin
+## Signin
 
 POST http://localhost:8080/signin
 
@@ -51,11 +51,11 @@ boby example :
     "password": "abc"
 }
 
-##list of persons
+## List of persons
 
 GET http://localhost:8080/persons
 
-##Create a Buddy
+## Create a Buddy
 
 POST http://localhost:8080/buddy
 
@@ -68,12 +68,12 @@ boby example :
     "buddyLastName": ""
 }
 
-##list my buddy
+## List my buddy
 
 GEST http://localhost:8080/buddy/{email}
 
 
-##operate payement betwwen buddys
+## Operate payement betwwen buddys
 
 POST http://localhost:8080/transaction/buddy
 
@@ -87,11 +87,11 @@ boby example :
     "feeAmount": ""
 }
 
-##list bank info for a person
+## List bank info for a person
 
 GET http://localhost:8080/bankinfo/{email}
 
-##create bankinfo for a person
+## Create bankinfo for a person
 
 POST http://localhost:8080/bankinfo
 
@@ -106,7 +106,7 @@ boby example :
         }
     }
     
-##credit car operation
+## Credit car operation
 
 POST http://localhost:8080/transaction/creditcard/{email}
 
@@ -120,7 +120,7 @@ boby example :
 	"amount" : "1000"
 }
 
-##transfert money to the bank
+## Transfert money to the bank
 
 POST http://localhost:8080/transaction/bank/{email}
 

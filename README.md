@@ -19,11 +19,11 @@ What things you need to install the software and how to install them
 # Installation
 Database création : Execute drop.sql and create.sql
 First element in database : excecute data.sql to insert system user. 2 lignes are mandatory 
-    in person table : insert "paymybuddy@paymybuddy.com" ligne
-    in account table : insert id 1 ligne
+- in person table : insert "paymybuddy@paymybuddy.com" ligne
+- in account table : insert id 1 ligne
 
 # Class Diagram
-![ScreenShot](D-ClassV5.4.jpg)
+![ScreenShot](D-ClassV5.4.JPG)
 
 # MPD
 ![ScreenShot](paymybuddy1.0.png)

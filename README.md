@@ -17,10 +17,13 @@ What things you need to install the software and how to install them
 - My SQL
 
 # Installation
-Execute drop.sql and create.sql
+Database création : Execute drop.sql and create.sql
+First element in database : excecute data.sql to insert system user. 2 lignes are mandatory 
+    in person table : insert "paymybuddy@paymybuddy.com" ligne
+    in account table : insert id 1 ligne
 
 # Class Diagram
-![ScreenShot](D-Class V5.4.jpg)
+![ScreenShot](D-ClassV5.4.jpg)
 
 # MPD
 ![ScreenShot](paymybuddy1.0.png)
@@ -33,11 +36,13 @@ POST http://localhost:8080/signup
 boby example :
 
 {
+
     "firstName": "May",
     "lastName": "Day",
     "birthdate": "1985-10-24",
     "email": "may.day@dangeurementvotre.fr",
     "password": "SPECTRE"
+    
 }
 
 ## Signin
@@ -47,8 +52,10 @@ POST http://localhost:8080/signin
 boby example :
 
 {
+
     "email": "james.bond@mi6.uk",
     "password": "abc"
+    
 }
 
 ## List of persons
@@ -62,10 +69,12 @@ POST http://localhost:8080/buddy
 boby example :
 
 {
+
     "myEmail": "james.bond@mi6.uk",
     "buddyEmail": "vesper.lynd@casinoroyal.com",
     "buddyFirstname": "",
     "buddyLastName": ""
+    
 }
 
 ## List my buddy
@@ -80,6 +89,7 @@ POST http://localhost:8080/transaction/buddy
 boby example :
 
 {
+
     "myEmail": "james.bond@mi6.uk",
     "buddyEmail": "vesper.lynd@casinoroyal.com",
     "description": "Il était une fois une transaction",
@@ -96,6 +106,7 @@ GET http://localhost:8080/bankinfo/{email}
 POST http://localhost:8080/bankinfo
 
 boby example :
+
     {
   
         "type": 1,
@@ -113,11 +124,13 @@ POST http://localhost:8080/transaction/creditcard/{email}
 boby example :
 
 {
+
 	"creditCardNumber": "1234567890123456",
 	"expirationDate" :"2020-12-31",
 	"ccv" : "123",
 	"description" : "Operation par CB",
 	"amount" : "1000"
+	
 }
 
 ## Transfert money to the bank
@@ -127,9 +140,11 @@ POST http://localhost:8080/transaction/bank/{email}
 boby example :
 
 {
+
 	"description" : "virement à la banque",
 	"amount" : "500",
     "bankinfo": {
               "id": "2"
         }
+        
 }

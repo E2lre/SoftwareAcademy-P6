@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BankInfoDao extends JpaRepository<BankInfo, Integer> {
-    List<BankInfo> findByPerson(Person person);//TODO commenter correctement
+    List<BankInfo> findByPerson(Person person);
     BankInfo findById(int id);
 
 }

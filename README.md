@@ -17,10 +17,20 @@ What things you need to install the software and how to install them
 - My SQL 8.0
 
 # Installation
-Database création : Execute drop.sql and create.sql
+
+Database création :
+- Create the database and the schema  
+- Execute drop.sql and create.sql
+- create the environnement variable JASYPT_ENCRYPTOR_PASSWORD for the key of encryption
+- The database password is crypt with jasypt 
+- At the first execution, be sure that the properties spring.jpa.hibernate.ddl-auto is to create and after put the value none
+ 
 First element in database : excecute data.sql to insert system user. 2 lignes are mandatory 
 - in person table : insert "paymybuddy@paymybuddy.com" ligne
 - in account table : insert id 1 ligne
+
+To start the application execute:
+- java -jar paysystem-0.0.1-SNAPSHOT.jar
 
 # Class Diagram
 ![ScreenShot](D-ClassV5.4.JPG)

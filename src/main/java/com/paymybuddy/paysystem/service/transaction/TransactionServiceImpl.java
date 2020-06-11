@@ -89,6 +89,9 @@ public class TransactionServiceImpl implements TransactionService{
                         payment.setFeeAmount(fee);
                         payment.setAmount(transactionBuddy.getTransactionAmount());
                         payment.setDescription(transactionBuddy.getDescription());
+                        payment.setAccount(myAccount);
+
+                        //TDO ajouter le set
                         Date now = new Date();
                         payment.setTransactionDate(now);
                         paymentDao.save(payment);
@@ -96,11 +99,13 @@ public class TransactionServiceImpl implements TransactionService{
 
                         //Credit buddy transaction
                         Credit credit = new Credit();
-                        credit.setBuddyCredit(buddyPerson);
+                        credit.setBuddyCredit(myPerson);
                         credit.setDescription(transactionBuddy.getDescription());
                         credit.setTransactionDate(now);
                         credit.setAmount(transactionBuddy.getTransactionAmount());
+                        credit.setAccount(buddyAccount);
                         creditDao.save(credit);
+
 
                         //Credit application account for fee
                         Account systemeAccount = accountDao.findById(systemeAccountId);
@@ -159,6 +164,7 @@ public class TransactionServiceImpl implements TransactionService{
                 accountDao.save(myAccount);
 
                 creditCardOperation.setTransactionDate(now);
+                creditCardOperation.setAccount(myAccount);
                 creditCardOperationDao.save(creditCardOperation);
           } else {
                 amount = -1;
@@ -208,6 +214,7 @@ public class TransactionServiceImpl implements TransactionService{
                     BankInfo bankInfo = bankInfoDao.findById(bankInfoInput.getId());
                     bankTransfert.setBankinfo(bankInfo);
                     bankTransfert.setTransactionDate(now);
+                    bankTransfert.setAccount(myAccount);
 
                     ///bank Transfert  on transaction table.
                     bankTransfertDao.save(bankTransfert);

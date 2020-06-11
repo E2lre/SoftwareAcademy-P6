@@ -85,4 +85,12 @@ public abstract class Transaction implements Serializable {
             this.transactionDate = new Date(transactionDate.getTime());
         }
     }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

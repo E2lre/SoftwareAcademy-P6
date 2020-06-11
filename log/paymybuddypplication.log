@@ -6955,3 +6955,97 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'paymybuddy_prod.transaction'
 2020-06-11 10:55:10,761 ERROR o.h.t.s.i.SchemaDropperImpl$DelayedDropActionImpl-perform [main] HHH000478: Unsuccessful: drop table account if exists
 2020-06-11 10:55:10,761 ERROR o.h.t.s.i.SchemaDropperImpl$DelayedDropActionImpl-perform [main] HHH000478: Unsuccessful: drop table bankinfo if exists
 2020-06-11 10:55:10,777 ERROR o.h.t.s.i.SchemaDropperImpl$DelayedDropActionImpl-perform [main] HHH000478: Unsuccessful: drop table person if exists
+2020-06-11 11:01:36,668 INFO c.p.p.PaysystemApplication-logStarting [main] Starting PaysystemApplication on UC715467VW7JAV with PID 1760 (C:\Devenv\git\P6\SoftwareAcademy-P6\paysystem\target\classes started by S058601 in C:\Devenv\git\P6\SoftwareAcademy-P6\paysystem)
+2020-06-11 11:01:36,686 INFO c.p.p.PaysystemApplication-logStartupProfileInfo [main] No active profile set, falling back to default profiles: default
+2020-06-11 11:01:38,188 INFO o.s.d.r.c.RepositoryConfigurationDelegate-registerRepositoriesIn [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2020-06-11 11:01:38,293 INFO o.s.d.r.c.RepositoryConfigurationDelegate-registerRepositoriesIn [main] Finished Spring Data repository scanning in 108ms. Found 7 JPA repository interfaces.
+2020-06-11 11:01:38,502 INFO c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor-postProcessBeanFactory [main] Post-processing PropertySource instances
+2020-06-11 11:01:38,591 INFO c.u.j.EncryptablePropertySourceConverter-makeEncryptable [main] Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2020-06-11 11:01:38,591 INFO c.u.j.EncryptablePropertySourceConverter-makeEncryptable [main] Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2020-06-11 11:01:38,591 INFO c.u.j.EncryptablePropertySourceConverter-makeEncryptable [main] Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2020-06-11 11:01:38,591 INFO c.u.j.EncryptablePropertySourceConverter-makeEncryptable [main] Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2020-06-11 11:01:38,591 INFO c.u.j.EncryptablePropertySourceConverter-makeEncryptable [main] Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2020-06-11 11:01:38,591 INFO c.u.j.EncryptablePropertySourceConverter-makeEncryptable [main] Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2020-06-11 11:01:38,591 INFO c.u.j.EncryptablePropertySourceConverter-makeEncryptable [main] Converting PropertySource applicationConfig: [classpath:/application.properties] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2020-06-11 11:01:38,725 INFO c.u.j.f.DefaultLazyPropertyFilter-lambda$null$2 [main] Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2020-06-11 11:01:38,785 INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker-postProcessAfterInitialization [main] Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-06-11 11:01:38,800 INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker-postProcessAfterInitialization [main] Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-06-11 11:01:38,800 INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker-postProcessAfterInitialization [main] Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@66153688' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-06-11 11:01:38,800 INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker-postProcessAfterInitialization [main] Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-06-11 11:01:38,800 INFO o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker-postProcessAfterInitialization [main] Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-06-11 11:01:38,875 INFO c.u.j.r.DefaultLazyPropertyResolver-lambda$null$2 [main] Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2020-06-11 11:01:38,875 INFO c.u.j.d.DefaultLazyPropertyDetector-lambda$null$2 [main] Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2020-06-11 11:01:39,143 INFO o.s.b.w.e.t.TomcatWebServer-initialize [main] Tomcat initialized with port(s): 8080 (http)
+2020-06-11 11:01:39,158 INFO o.a.c.h.Http11NioProtocol-log [main] Initializing ProtocolHandler ["http-nio-8080"]
+2020-06-11 11:01:39,158 INFO o.a.c.c.StandardService-log [main] Starting service [Tomcat]
+2020-06-11 11:01:39,158 INFO o.a.c.c.StandardEngine-log [main] Starting Servlet engine: [Apache Tomcat/9.0.33]
+2020-06-11 11:01:39,308 INFO o.a.c.c.C.[.[.[/]-log [main] Initializing Spring embedded WebApplicationContext
+2020-06-11 11:01:39,308 INFO o.s.w.c.ContextLoader-prepareWebApplicationContext [main] Root WebApplicationContext: initialization completed in 2517 ms
+2020-06-11 11:01:39,529 INFO c.u.j.e.DefaultLazyEncryptor-lambda$null$2 [main] String Encryptor custom Bean not found with name 'jasyptStringEncryptor'. Initializing Default String Encryptor
+2020-06-11 11:01:39,538 INFO c.u.j.e.DefaultLazyEncryptor-getProperty [main] Encryptor config not found for property jasypt.encryptor.algorithm, using default value: PBEWithMD5AndDES
+2020-06-11 11:01:39,540 INFO c.u.j.e.DefaultLazyEncryptor-getProperty [main] Encryptor config not found for property jasypt.encryptor.keyObtentionIterations, using default value: 1000
+2020-06-11 11:01:39,541 INFO c.u.j.e.DefaultLazyEncryptor-getProperty [main] Encryptor config not found for property jasypt.encryptor.poolSize, using default value: 1
+2020-06-11 11:01:39,541 INFO c.u.j.e.DefaultLazyEncryptor-getProperty [main] Encryptor config not found for property jasypt.encryptor.providerName, using default value: null
+2020-06-11 11:01:39,541 INFO c.u.j.e.DefaultLazyEncryptor-getProperty [main] Encryptor config not found for property jasypt.encryptor.providerClassName, using default value: null
+2020-06-11 11:01:39,542 INFO c.u.j.e.DefaultLazyEncryptor-getProperty [main] Encryptor config not found for property jasypt.encryptor.saltGeneratorClassname, using default value: org.jasypt.salt.RandomSaltGenerator
+2020-06-11 11:01:39,543 INFO c.u.j.e.DefaultLazyEncryptor-getProperty [main] Encryptor config not found for property jasypt.encryptor.ivGeneratorClassname, using default value: org.jasypt.salt.NoOpIVGenerator
+2020-06-11 11:01:39,544 INFO c.u.j.e.DefaultLazyEncryptor-getProperty [main] Encryptor config not found for property jasypt.encryptor.stringOutputType, using default value: base64
+2020-06-11 11:01:39,654 INFO c.z.h.HikariDataSource-getConnection [main] HikariPool-1 - Starting...
+2020-06-11 11:01:40,032 INFO c.z.h.HikariDataSource-getConnection [main] HikariPool-1 - Start completed.
+2020-06-11 11:01:40,040 INFO o.s.b.a.h.H2ConsoleAutoConfiguration-lambda$h2Console$0 [main] H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/paymybuddy_prod?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Europe/Paris'
+2020-06-11 11:01:40,154 WARN o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration-openEntityManagerInViewInterceptor [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-06-11 11:01:41,016 WARN o.h.c.AnnotationBinder-processJoinedDiscriminatorProperties [main] HHH000457: Joined inheritance hierarchy [com.paymybuddy.paysystem.model.Transaction] defined explicit @DiscriminatorColumn.  Legacy Hibernate behavior was to ignore the @DiscriminatorColumn.  However, as part of issue HHH-6911 we now apply the explicit @DiscriminatorColumn.  If you would prefer the legacy behavior, enable the `hibernate.discriminator.ignore_explicit_for_joined` setting (hibernate.discriminator.ignore_explicit_for_joined=true)
+2020-06-11 11:01:43,580 INFO o.s.o.j.LocalContainerEntityManagerFactoryBean-buildNativeEntityManagerFactory [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-06-11 11:01:44,826 INFO o.s.s.w.DefaultSecurityFilterChain-<init> [main] Creating filter chain: Ant [pattern='/v2/api-docs'], []
+2020-06-11 11:01:44,826 INFO o.s.s.w.DefaultSecurityFilterChain-<init> [main] Creating filter chain: Ant [pattern='/swagger-resources/**'], []
+2020-06-11 11:01:44,826 INFO o.s.s.w.DefaultSecurityFilterChain-<init> [main] Creating filter chain: Ant [pattern='/swagger-ui.html'], []
+2020-06-11 11:01:44,826 INFO o.s.s.w.DefaultSecurityFilterChain-<init> [main] Creating filter chain: Ant [pattern='/configuration/**'], []
+2020-06-11 11:01:44,826 INFO o.s.s.w.DefaultSecurityFilterChain-<init> [main] Creating filter chain: Ant [pattern='/webjars/**'], []
+2020-06-11 11:01:44,826 INFO o.s.s.w.DefaultSecurityFilterChain-<init> [main] Creating filter chain: Ant [pattern='/public'], []
+2020-06-11 11:01:44,826 INFO o.s.s.w.DefaultSecurityFilterChain-<init> [main] Creating filter chain: Ant [pattern='/h2-console/**/**'], []
+2020-06-11 11:01:44,892 INFO o.s.s.w.DefaultSecurityFilterChain-<init> [main] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2965dd88, org.springframework.security.web.context.SecurityContextPersistenceFilter@43445fc6, org.springframework.security.web.header.HeaderWriterFilter@5ad0c70a, org.springframework.security.web.authentication.logout.LogoutFilter@67e11bda, com.paymybuddy.paysystem.config.JwtTokenFilter@3221588e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@17befef0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@24018c8b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@51141f64, org.springframework.security.web.session.SessionManagementFilter@4fd37449, org.springframework.security.web.access.ExceptionTranslationFilter@59e0d521, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4fc3529]
+2020-06-11 11:01:45,089 INFO o.s.s.c.ThreadPoolTaskExecutor-initialize [main] Initializing ExecutorService 'applicationTaskExecutor'
+2020-06-11 11:01:45,677 INFO o.a.c.h.Http11NioProtocol-log [main] Starting ProtocolHandler ["http-nio-8080"]
+2020-06-11 11:01:45,708 INFO o.s.b.w.e.t.TomcatWebServer-start [main] Tomcat started on port(s): 8080 (http) with context path ''
+2020-06-11 11:01:45,818 INFO o.s.b.w.e.t.TomcatWebServer-initialize [main] Tomcat initialized with port(s): 8090 (http)
+2020-06-11 11:01:45,819 INFO o.a.c.h.Http11NioProtocol-log [main] Initializing ProtocolHandler ["http-nio-8090"]
+2020-06-11 11:01:45,821 INFO o.a.c.c.StandardService-log [main] Starting service [Tomcat]
+2020-06-11 11:01:45,821 INFO o.a.c.c.StandardEngine-log [main] Starting Servlet engine: [Apache Tomcat/9.0.33]
+2020-06-11 11:01:45,851 INFO o.a.c.c.C.[.[.[/]-log [main] Initializing Spring embedded WebApplicationContext
+2020-06-11 11:01:45,852 INFO o.s.w.c.ContextLoader-prepareWebApplicationContext [main] Root WebApplicationContext: initialization completed in 137 ms
+2020-06-11 11:01:45,871 INFO o.s.b.a.e.w.EndpointLinksResolver-<init> [main] Exposing 4 endpoint(s) beneath base path '/actuator'
+2020-06-11 11:01:45,937 INFO o.a.c.h.Http11NioProtocol-log [main] Starting ProtocolHandler ["http-nio-8090"]
+2020-06-11 11:01:45,945 INFO o.s.b.w.e.t.TomcatWebServer-start [main] Tomcat started on port(s): 8090 (http) with context path ''
+2020-06-11 11:01:45,948 INFO c.p.p.PaysystemApplication-logStarted [main] Started PaysystemApplication in 10.213 seconds (JVM running for 12.261)
+2020-06-11 11:01:46,553 INFO o.a.c.c.C.[.[.[/]-log [RMI TCP Connection(1)-10.0.2.15] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-06-11 11:01:46,553 INFO o.s.w.s.DispatcherServlet-initServletBean [RMI TCP Connection(1)-10.0.2.15] Initializing Servlet 'dispatcherServlet'
+2020-06-11 11:01:46,569 INFO o.s.w.s.DispatcherServlet-initServletBean [RMI TCP Connection(1)-10.0.2.15] Completed initialization in 16 ms
+2020-06-11 11:02:25,954 INFO c.p.p.w.c.PersonController-checkPwd [http-nio-8080-exec-1] checkPwd start
+2020-06-11 11:02:25,958 INFO c.p.p.s.p.PersonServiceImpl-signin [http-nio-8080-exec-1] start
+2020-06-11 11:02:26,999 INFO c.p.p.s.p.PersonServiceImpl-signin [http-nio-8080-exec-1] finish
+2020-06-11 11:02:27,049 INFO c.p.p.w.c.PersonController-checkPwd [http-nio-8080-exec-1] checkPwd finish
+2020-06-11 11:02:39,974 INFO c.p.p.w.c.PersonController-addBuddy [http-nio-8080-exec-3] addBuddy start : vesper.lynd@casinoroyal.com
+2020-06-11 11:02:39,975 INFO c.p.p.s.p.PersonServiceImpl-addBuddy [http-nio-8080-exec-3] start
+2020-06-11 11:02:39,989 INFO c.p.p.s.p.PersonServiceImpl-checkBuddy [http-nio-8080-exec-3] checkBuddy start
+2020-06-11 11:02:40,015 INFO c.p.p.s.p.PersonServiceImpl-checkBuddy [http-nio-8080-exec-3] checkBuddy start
+2020-06-11 11:02:40,079 INFO c.p.p.s.p.PersonServiceImpl-addBuddy [http-nio-8080-exec-3] finish
+2020-06-11 11:02:40,079 INFO c.p.p.w.c.PersonController-addBuddy [http-nio-8080-exec-3] addBuddy finish 
+2020-06-11 11:02:46,310 INFO c.p.p.w.c.PersonController-transactionBuddy [http-nio-8080-exec-4] TransactionBuddy start 
+2020-06-11 11:02:46,316 INFO c.p.p.s.p.PersonServiceImpl-payBuddy [http-nio-8080-exec-4] addTransaction start. 
+2020-06-11 11:02:46,332 INFO c.p.p.s.p.PersonServiceImpl-checkBuddy [http-nio-8080-exec-4] checkBuddy start
+2020-06-11 11:02:46,342 INFO c.p.p.s.p.PersonServiceImpl-checkBuddy [http-nio-8080-exec-4] checkBuddy start
+2020-06-11 11:02:46,504 INFO c.p.p.s.p.PersonServiceImpl-payBuddy [http-nio-8080-exec-4] addTransaction finish
+2020-06-11 11:02:46,515 INFO c.p.p.w.c.PersonController-transactionBuddy [http-nio-8080-exec-4] TransactionBuddy finish 
+2020-06-11 11:02:52,535 INFO c.p.p.w.c.PersonController-findFriendByEmail [http-nio-8080-exec-5] findFriendByEmail start
+2020-06-11 11:02:52,536 INFO c.p.p.s.p.PersonServiceImpl-findFriendByEmail [http-nio-8080-exec-5] start
+2020-06-11 11:02:52,545 INFO c.p.p.s.p.PersonServiceImpl-findFriendByEmail [http-nio-8080-exec-5] finish
+2020-06-11 11:02:52,546 INFO c.p.p.w.c.PersonController-findFriendByEmail [http-nio-8080-exec-5] findFriendByEmail finish
+2020-06-11 11:03:00,236 INFO c.p.p.w.c.PersonController-transactionCreditCard [http-nio-8080-exec-6] transactionCreditCard start 
+2020-06-11 11:03:00,238 INFO c.p.p.w.c.PersonController-transactionCreditCard [http-nio-8080-exec-6] transactionCreditCard start : james.bond@mi6.uk CB descriptionOperation par CB
+2020-06-11 11:03:00,239 INFO c.p.p.s.p.PersonServiceImpl-creditCardTransaction [http-nio-8080-exec-6] start creditCardTransaction with email james.bond@mi6.uk
+2020-06-11 11:03:00,260 INFO c.p.p.s.p.PersonServiceImpl-creditCardTransaction [http-nio-8080-exec-6] creditCardTransaction finish correctly with email james.bond@mi6.uk
+2020-06-11 11:03:00,267 INFO c.p.p.w.c.PersonController-transactionCreditCard [http-nio-8080-exec-6] transactionCreditCard start 
+2020-06-11 11:03:06,283 INFO c.p.p.w.c.PersonController-transactionBankTransfert [http-nio-8080-exec-7] transactionBankTransfert start 
+2020-06-11 11:03:06,284 INFO c.p.p.w.c.PersonController-transactionBankTransfert [http-nio-8080-exec-7] transactionBankTransfert start : james.bond@mi6.uk CB descriptionvirement à la banque
+2020-06-11 11:03:06,312 INFO c.p.p.s.p.PersonServiceImpl-bankTransaction [http-nio-8080-exec-7] bankTransaction finish correctly with email james.bond@mi6.uk
+2020-06-11 11:03:06,320 INFO c.p.p.w.c.PersonController-transactionBankTransfert [http-nio-8080-exec-7] transactionBankTransfert finish 
